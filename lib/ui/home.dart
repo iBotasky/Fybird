@@ -9,6 +9,16 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   String _text = '';
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _currentIndex = 0;
+      _text = 'One';
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {},
@@ -22,15 +32,12 @@ class _HomePageState extends State<HomePage> {
               items: [
                 BottomNavigationBarItem(
                     icon: Icon(Icons.account_circle),
-                    activeIcon: Icon(Icons.account_circle),
                     title: Text('One')),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.movie_filter),
-                    activeIcon: Icon(Icons.movie_filter),
                     title: Text('Movie')),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.book),
-                    activeIcon: Icon(Icons.book),
                     title: Text('Daily'))
               ],
               currentIndex: _currentIndex,
