@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cybird/ui/daily.dart';
-import 'package:flutter_cybird/ui/movie.dart';
-import 'package:flutter_cybird/ui/one.dart';
+import 'package:flutter_cybird/ui/Daily.dart';
+import 'package:flutter_cybird/ui/Movie.dart';
+import 'package:flutter_cybird/ui/One.dart';
 
 class HomePage extends StatefulWidget {
   @override
