@@ -6,12 +6,27 @@ class OnePage extends StatefulWidget {
 }
 
 class _OnePageState extends State<OnePage> {
+  String _string = 'Test';
+
+  @override
+  void initState() {
+    print("initState");
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('One is All'),
-      )
+      body: Container(
+        child: RaisedButton(
+            child: Text(_string),
+            onPressed: () {
+              setState(() {
+                _string = _string + "1";
+              });
+            }),
+      ),
     );
   }
 }
