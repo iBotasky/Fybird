@@ -9,30 +9,68 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  List<AppPage> _items;
   int _currentIndex = 0;
-  List<BottomItem> _navigationViews;
-  List<Widget> _children;
 
   @override
   void initState() {
     super.initState();
-    _navigationViews = <BottomItem>[
-      BottomItem(icon: Icon(Icons.account_circle), title: 'One', vsync: this),
-      BottomItem(icon: Icon(Icons.movie_filter), title: 'Movie', vsync: this),
-      BottomItem(icon: Icon(Icons.book), title: 'Daily', vsync: this)
+    _items = [
+      new AppPage(
+          icon: new Icon(Icons.account_circle),
+          title: 'One',
+          color: Colors.black87,
+          body: OnePage(),
+          vsync: this),
+      new AppPage(
+        icon: new Icon(Icons.movie_filter),
+        title: 'Movie',
+        color: Colors.green,
+        body: MoviePage(),
+        vsync: this,
+      ),
+      new AppPage(
+        icon: new Icon(Icons.bookmark),
+        title: 'Daily',
+        color: Colors.blueAccent.shade400,
+        body: DailyPage(),
+        vsync: this,
+      ),
+      new AppPage(
+        icon: new Icon(Icons.whatshot),
+        title: 'Girls',
+        color: Colors.pinkAccent.shade400,
+        body: DailyPage(),
+        vsync: this,
+      ),
     ];
 
-    _children = [
-      OnePage(),
-      MoviePage(),
-      DailyPage()
-    ];
+    for (AppPage view in _items) view.controller.addListener(_rebuild);
+
+    _items[_currentIndex].controller.value = 1.0;
   }
 
+  void _rebuild() {
+    setState(() {});
+  }
 
   @override
   void dispose() {
+    for (AppPage page in _items) {
+      page.controller.dispose();
+    }
     super.dispose();
+  }
+
+  Widget _buildPageStack() {
+    final List<Widget> transitions = <Widget>[];
+
+    for (int i = 0; i < _items.length; i++) {
+      transitions.add(IgnorePointer(
+          ignoring: _currentIndex != i,
+          child: _items[i].buildTransition(context)));
+    }
+    return Stack(children: transitions);
   }
 
   @override
@@ -43,36 +81,59 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         home: Scaffold(
           appBar: AppBar(
             title: Center(
-              child: Text(_navigationViews[_currentIndex]._title),
+              child: Text(_items[_currentIndex]._title),
             ),
           ),
           body: Center(
-            child: _children[_currentIndex],
+            child: _buildPageStack(),
           ),
           bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              items: _navigationViews
+              items: _items
                   .map<BottomNavigationBarItem>(
-                      (BottomItem navigationView) => navigationView.item)
+                      (AppPage appPage) => appPage.item)
                   .toList(),
               currentIndex: _currentIndex,
               onTap: (int index) {
                 setState(() {
+                  _items[_currentIndex].controller.reverse();
                   _currentIndex = index;
+                  _items[_currentIndex].controller.forward();
                 });
               }),
         ));
   }
 }
 
-class BottomItem {
-  BottomItem({String title, Icon icon, TickerProvider vsync})
-      : _title = title,
-        item = BottomNavigationBarItem(
+class AppPage {
+  AppPage(
+      {Widget icon, String title, Color color, this.body, TickerProvider vsync})
+      : this._icon = icon,
+        this._title = title,
+        this._color = color,
+        this.controller = new AnimationController(
+            vsync: vsync, duration: Duration(milliseconds: 300)),
+        this.item = new BottomNavigationBarItem(
           icon: icon,
-          title: Text(title),
-        );
+          title: new Text(title),
+          backgroundColor: color,
+        ) {
+    _animation =
+        new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+  }
 
+  final Widget _icon;
   final String _title;
+  final Color _color;
+  final AnimationController controller;
   final BottomNavigationBarItem item;
+  final Widget body;
+  CurvedAnimation _animation;
+
+  FadeTransition buildTransition(BuildContext context) {
+    return new FadeTransition(
+      opacity: _animation,
+      child: body,
+    );
+  }
 }
