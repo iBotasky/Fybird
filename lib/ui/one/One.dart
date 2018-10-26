@@ -18,15 +18,8 @@ class _OnePageState extends State<OnePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: RaisedButton(
-            child: Text(_string),
-            onPressed: () {
-              setState(() {
-                _string = _string + "1";
-              });
-            }),
-      ),
-    );
+      body: Center(
+        child: Text('One is all'),
+    ));
   }
 }

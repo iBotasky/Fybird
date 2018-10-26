@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cybird/ui/Daily.dart';
-import 'package:flutter_cybird/ui/Movie.dart';
-import 'package:flutter_cybird/ui/One.dart';
+import 'package:flutter_cybird/ui/daily/Daily.dart';
+import 'package:flutter_cybird/ui/girls/Girls.dart';
+import 'package:flutter_cybird/ui/movie/Movie.dart';
+import 'package:flutter_cybird/ui/one/One.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         icon: new Icon(Icons.whatshot),
         title: 'Girls',
         color: Colors.pinkAccent.shade400,
-        body: DailyPage(),
+        body: GirlsPage(),
         vsync: this,
       ),
     ];

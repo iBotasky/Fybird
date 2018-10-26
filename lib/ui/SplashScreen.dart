@@ -11,7 +11,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-
   AnimationController animationController;
   Animation<double> animation;
 
@@ -49,7 +48,15 @@ class _SplashScreenState extends State<SplashScreen>
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
-                child: Image.asset('assets/images/powered_by.png',
+                child: Text(
+                    'Cyber Flutter',
+                    style: TextStyle(
+                        color: Colors.blue[800], fontWeight: FontWeight.bold, fontSize: 30.0),
+                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 30.0),
+                child: Image.asset('assets/images/logo.png',
                     height: 25.0, fit: BoxFit.scaleDown),
               ),
             ],
@@ -57,8 +64,8 @@ class _SplashScreenState extends State<SplashScreen>
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/images/logo.png',
-                  height: animation.value * 250, width: animation.value * 250)
+              Image.asset('assets/images/ic_launcher_round.png',
+                  height: animation.value * 150, width: animation.value * 150)
             ],
           )
         ],
