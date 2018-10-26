@@ -49,9 +49,9 @@ class _SplashScreenState extends State<SplashScreen>
               Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
                 child: Text(
-                    'Cyber Flutter',
+                    'Cybird Flutter',
                     style: TextStyle(
-                        color: Colors.blue[800], fontWeight: FontWeight.bold, fontSize: 30.0),
+                        color: Colors.blue[900], fontWeight: FontWeight.bold, fontSize: 30.0, fontStyle: FontStyle.italic),
                   ),
               ),
               Padding(
@@ -64,8 +64,8 @@ class _SplashScreenState extends State<SplashScreen>
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/images/ic_launcher_round.png',
-                  height: animation.value * 150, width: animation.value * 150)
+              Image.asset('assets/images/ic_launcher_foreground.png',
+                  height: animation.value * 200, width: animation.value * 200)
             ],
           )
         ],
