@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter_cybird/ui/one/OneDatas.dart';
+import 'package:flutter_cybird/ui/one/OneData.dart';
+import 'package:flutter_cybird/ui/one/WeatherData.dart';
+import 'package:http/http.dart' as http;
 
 class OnePage extends StatefulWidget {
   @override
@@ -11,25 +13,42 @@ class OnePage extends StatefulWidget {
 }
 
 class _OnePageState extends State<OnePage> {
+  List<OneData> datas = List();
+
   @override
   void initState() {
     super.initState();
-    print('initState');
-    _getOneDatas('2018-10-25');
+    getOneDatas().then((value) {
+      setState(() {
+        datas = value;
+      });
+    });
   }
 
-
-  _getOneDatas(String date) async {
-    Dio dio = Dio();
-    Response response = await dio.get(URL_ONE_HOST + '/api/channel/one/$date/0');
-
-    Map userMap = json.decode(response.data.toString());
-    var data = new OneDetail.fromJson(userMap);
-    final String url = data.data.contentList[0].imgUrl;
-    print("image url $url");
+  List<String> _getLast7DaysDate() {
+    DateTime now = DateTime.now();
+    final format = DateFormat('yyyy-MM-dd');
+    List<String> dates = List<String>();
+    for (int i = 0; i < 7; i++) {
+      DateTime dateTime = DateTime(now.year, now.month, now.day - i);
+      print(format.format(dateTime));
+      dates.add(format.format(dateTime));
+    }
+    return dates;
   }
 
-
+  Future<List<OneData>> getOneDatas() async {
+    List<String> dates = _getLast7DaysDate();
+    final client = http.Client();
+    List<OneData> datas = List();
+    for (String date in dates) {
+      http.Response response =
+          await client.get(URL_ONE_HOST + '/api/channel/one/$date/0');
+      Map oneData = json.decode(response.body);
+      datas.add(OneData.fromJson(oneData));
+    }
+    return datas;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,38 +56,41 @@ class _OnePageState extends State<OnePage> {
         body: Center(
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return OneDetailItem();
+          return OneDetailItem(
+            data: datas[index],
+          );
         },
-        itemCount: 20,
+        itemCount: datas.isEmpty ? 0 : datas.length,
       ),
     ));
   }
 }
 
 class OneDetailItem extends StatefulWidget {
+  final OneData data;
+
+  const OneDetailItem({Key key, this.data}) : super(key: key);
+
   @override
-  _OneDetailItemState createState() => _OneDetailItemState();
+  _OneDetailItemState createState() => _OneDetailItemState(data);
 }
 
 class _OneDetailItemState extends State<OneDetailItem> {
+  final OneData data;
+
+  _OneDetailItemState(this.data);
+
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Stack(
       children: <Widget>[
-//        Image.network(
-//          'https://raw.githubusercontent.com/flutter/website/master/src/_includes/code/layout/lakes/images/lake.jpg',
-//          fit: BoxFit.cover,
-//          height: 240.0,
-//          width: double.infinity,
-//        ),
         FadeInImage.assetNetwork(
             width: double.infinity,
             fit: BoxFit.cover,
             height: 240.0,
             placeholder: 'assets/images/ic_launcher_foreground.png',
-            image:
-                'https://github.com/flutter/website/blob/master/src/_includes/code/layout/lakes/images/lake.jpg?raw=true'),
+            image: data.data.contentList[0].imgUrl),
         Container(
             width: double.infinity,
             height: 240.0,
@@ -85,15 +107,19 @@ class _OneDetailItemState extends State<OneDetailItem> {
               end: Alignment.topCenter,
 //              stops: [0.1, 0.5, 0.9],
             ))),
-
         Container(
-            margin: EdgeInsets.all(20),
-            child: Text(
-                'SizedBox.expand will make the button take full width and height, which is not the question about. The question is about a button covering full width only not height',
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.blue[800],
-                    fontStyle: FontStyle.normal))),
+            width: double.infinity,
+            height: 240.0,
+//            margin: EdgeInsets.only(
+//                left: 20.0, top: 30.0, right: 20.0, bottom: 30.0),
+            child: Container(
+              margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Center(
+                    child: Text(data.data.contentList[0].forward,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal))))),
       ],
     ));
   }
