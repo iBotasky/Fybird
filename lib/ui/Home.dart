@@ -113,7 +113,7 @@ class AppPage {
         this._title = title,
         this._color = color,
         this.controller = new AnimationController(
-            vsync: vsync, duration: Duration(milliseconds: 300)),
+            vsync: vsync, duration: Duration(milliseconds: 200)),
         this.item = new BottomNavigationBarItem(
           icon: icon,
           title: new Text(title),

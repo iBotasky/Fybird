@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
+import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/one/OneData.dart';
-import 'package:flutter_cybird/ui/one/WeatherData.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class OnePage extends StatefulWidget {
   @override
@@ -14,13 +14,16 @@ class OnePage extends StatefulWidget {
 
 class _OnePageState extends State<OnePage> {
   List<OneData> datas = List();
+  bool isLoadComplete = false; //用以判断加载状态实现切换界面
 
   @override
   void initState() {
     super.initState();
     getOneDatas().then((value) {
       setState(() {
+        print('isComplete');
         datas = value;
+        isLoadComplete = true;
       });
     });
   }
@@ -54,14 +57,16 @@ class _OnePageState extends State<OnePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return OneDetailItem(
-            data: datas[index],
-          );
-        },
-        itemCount: datas.isEmpty ? 0 : datas.length,
-      ),
+      child: isLoadComplete
+          ? ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return OneDetailItem(
+                  data: datas[index],
+                );
+              },
+              itemCount: datas.isEmpty ? 0 : datas.length,
+            )
+          : LoadingView(),
     ));
   }
 }
@@ -110,10 +115,8 @@ class _OneDetailItemState extends State<OneDetailItem> {
         Container(
             width: double.infinity,
             height: 240.0,
-//            margin: EdgeInsets.only(
-//                left: 20.0, top: 30.0, right: 20.0, bottom: 30.0),
             child: Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                margin: EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Center(
                     child: Text(data.data.contentList[0].forward,
                         style: TextStyle(
