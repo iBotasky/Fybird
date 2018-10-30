@@ -102,13 +102,12 @@ class _OneDetailItemState extends State<OneDetailItem> {
               colors: [
                 // Colors are easy thanks to Flutter's
                 // Colors class.
-                Color.fromARGB(200, 0, 0, 0),
+                Color.fromARGB(210, 0, 0, 0),
                 Color.fromARGB(100, 0, 0, 0),
-                Color.fromARGB(50, 0, 0, 0),
+                Color.fromARGB(30, 0, 0, 0),
               ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
-//              stops: [0.1, 0.5, 0.9],
             ))),
         Container(
             width: double.infinity,
@@ -122,9 +121,9 @@ class _OneDetailItemState extends State<OneDetailItem> {
                     Text(
                       data.volume,
                       style: TextStyle(
-//                          color: Color.fromARGB(255, 33, 33, 33),
                           color: Colors.white54,
                           fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
                           fontSize: 20.0),
                     ),
                     Expanded(
