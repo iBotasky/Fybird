@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -17,7 +19,16 @@ class _OnePageState extends State<OnePage> {
   @override
   void initState() {
     super.initState();
-    getOneDatas().then((value) {
+    _getOneDatas().then((value) {
+      setState(() {
+        _datas = value;
+        _isLoadComplete = true;
+      });
+    });
+  }
+
+  Future<void> _handleDatas() {
+    return _getOneDatas().then((value) {
       setState(() {
         _datas = value;
         _isLoadComplete = true;
@@ -37,7 +48,7 @@ class _OnePageState extends State<OnePage> {
     return dates;
   }
 
-  Future<List<Content>> getOneDatas() async {
+  Future<List<Content>> _getOneDatas() async {
     List<String> dates = _getLast7DaysDate();
     final _dio = Dio();
     List<Content> datas = List();
@@ -54,14 +65,20 @@ class _OnePageState extends State<OnePage> {
     return Scaffold(
         body: Center(
       child: _isLoadComplete
-          ? ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return OneDetailItem(
-                  data: _datas[index],
-                );
-              },
-              itemCount: _datas.isEmpty ? 0 : _datas.length,
-            )
+          ? RefreshIndicator(
+              onRefresh: _handleDatas,
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  if (index != _datas.length) {
+                    return OneDetailItem(
+                      data: _datas[index],
+                    );
+                  } else {
+                    return FooterView();
+                  }
+                },
+                itemCount: _datas.isEmpty ? 0 : _datas.length + 1,
+              ))
           : LoadingView(),
     ));
   }

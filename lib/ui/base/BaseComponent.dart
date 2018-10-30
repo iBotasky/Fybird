@@ -20,3 +20,17 @@ class LoadingView extends StatelessWidget {
     );
   }
 }
+
+class FooterView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 30.0,
+      child: Center(
+        child: Text('已经没有更多数据'),
+      ),
+    );
+  }
+}
+
