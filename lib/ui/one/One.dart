@@ -81,6 +81,8 @@ class OneDetailItem extends StatefulWidget {
 
 class _OneDetailItemState extends State<OneDetailItem> {
   final Content data;
+  final TextStyle _bottom =
+      TextStyle(color: Colors.white, fontStyle: FontStyle.italic);
 
   _OneDetailItemState(this.data);
 
@@ -115,13 +117,35 @@ class _OneDetailItemState extends State<OneDetailItem> {
             width: double.infinity,
             height: 240.0,
             child: Container(
-                margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Center(
-                    child: Text(data.forward,
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontStyle: FontStyle.normal))))),
+                margin: EdgeInsets.only(
+                    top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      data.volume,
+                      style: TextStyle(
+//                          color: Color.fromARGB(255, 33, 33, 33),
+                      color: Colors.white54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0),
+                    ),
+                    Expanded(
+                        child: Center(
+                            child: Text(data.forward,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal)))),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('摄影|${data.picInfo}', style: _bottom),
+                        Text(data.wordsInfo, style: _bottom)
+                      ],
+                    )
+                  ],
+                ))),
       ],
     ));
   }
