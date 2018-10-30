@@ -1,10 +1,8 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/one/OneData.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class OnePage extends StatefulWidget {
@@ -13,16 +11,16 @@ class OnePage extends StatefulWidget {
 }
 
 class _OnePageState extends State<OnePage> {
-  List<Content> datas = List();
-  bool isLoadComplete = false; //用以判断加载状态实现切换界面
+  List<Content> _datas = List();
+  bool _isLoadComplete = false; //用以判断加载状态实现切换界面
 
   @override
   void initState() {
     super.initState();
     getOneDatas().then((value) {
       setState(() {
-        datas = value;
-        isLoadComplete = true;
+        _datas = value;
+        _isLoadComplete = true;
       });
     });
   }
@@ -41,13 +39,12 @@ class _OnePageState extends State<OnePage> {
 
   Future<List<Content>> getOneDatas() async {
     List<String> dates = _getLast7DaysDate();
-    final client = http.Client();
+    final _dio = Dio();
     List<Content> datas = List();
     for (String date in dates) {
-      http.Response response =
-          await client.get(URL_ONE_HOST + '/api/channel/one/$date/0');
-      Map oneData = json.decode(response.body);
-      datas.add(OneData.fromJson(oneData).data.contentList[0]);
+      Response response =
+          await _dio.get(URL_ONE_HOST + '/api/channel/one/$date/0');
+      datas.add(OneData.fromJson(response.data).data.contentList[0]);
     }
     return datas;
   }
@@ -56,14 +53,14 @@ class _OnePageState extends State<OnePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: isLoadComplete
+      child: _isLoadComplete
           ? ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return OneDetailItem(
-                  data: datas[index],
+                  data: _datas[index],
                 );
               },
-              itemCount: datas.isEmpty ? 0 : datas.length,
+              itemCount: _datas.isEmpty ? 0 : _datas.length,
             )
           : LoadingView(),
     ));
@@ -126,7 +123,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
                       data.volume,
                       style: TextStyle(
 //                          color: Color.fromARGB(255, 33, 33, 33),
-                      color: Colors.white54,
+                          color: Colors.white54,
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0),
                     ),
