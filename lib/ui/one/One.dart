@@ -13,7 +13,7 @@ class OnePage extends StatefulWidget {
 }
 
 class _OnePageState extends State<OnePage> {
-  List<OneData> datas = List();
+  List<Content> datas = List();
   bool isLoadComplete = false; //用以判断加载状态实现切换界面
 
   @override
@@ -21,7 +21,6 @@ class _OnePageState extends State<OnePage> {
     super.initState();
     getOneDatas().then((value) {
       setState(() {
-        print('isComplete');
         datas = value;
         isLoadComplete = true;
       });
@@ -40,15 +39,15 @@ class _OnePageState extends State<OnePage> {
     return dates;
   }
 
-  Future<List<OneData>> getOneDatas() async {
+  Future<List<Content>> getOneDatas() async {
     List<String> dates = _getLast7DaysDate();
     final client = http.Client();
-    List<OneData> datas = List();
+    List<Content> datas = List();
     for (String date in dates) {
       http.Response response =
           await client.get(URL_ONE_HOST + '/api/channel/one/$date/0');
       Map oneData = json.decode(response.body);
-      datas.add(OneData.fromJson(oneData));
+      datas.add(OneData.fromJson(oneData).data.contentList[0]);
     }
     return datas;
   }
@@ -72,7 +71,7 @@ class _OnePageState extends State<OnePage> {
 }
 
 class OneDetailItem extends StatefulWidget {
-  final OneData data;
+  final Content data;
 
   const OneDetailItem({Key key, this.data}) : super(key: key);
 
@@ -81,7 +80,7 @@ class OneDetailItem extends StatefulWidget {
 }
 
 class _OneDetailItemState extends State<OneDetailItem> {
-  final OneData data;
+  final Content data;
 
   _OneDetailItemState(this.data);
 
@@ -95,7 +94,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
             fit: BoxFit.cover,
             height: 240.0,
             placeholder: 'assets/images/ic_launcher_foreground.png',
-            image: data.data.contentList[0].imgUrl),
+            image: data.imgUrl),
         Container(
             width: double.infinity,
             height: 240.0,
@@ -118,7 +117,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
             child: Container(
                 margin: EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Center(
-                    child: Text(data.data.contentList[0].forward,
+                    child: Text(data.forward,
                         style: TextStyle(
                             fontSize: 14,
                             color: Colors.white,

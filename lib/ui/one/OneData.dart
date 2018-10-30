@@ -22,7 +22,7 @@ class OneData {
 class Data {
   String id;
   String date;
-  List<ContentList> contentList;
+  List<Content> contentList;
 
   Data({this.id, this.date, this.contentList});
 
@@ -30,8 +30,8 @@ class Data {
     id = json['id'];
     date = json['date'];
     if (json['content_list'] != null) {
-      contentList = new List<ContentList>();
-      json['content_list'].forEach((v) { contentList.add(new ContentList.fromJson(v)); });
+      contentList = new List<Content>();
+      json['content_list'].forEach((v) { contentList.add(new Content.fromJson(v)); });
     }
   }
 
@@ -46,7 +46,7 @@ class Data {
   }
 }
 
-class ContentList {
+class Content {
   String id;
   String itemId;
   String title;
@@ -73,9 +73,9 @@ class ContentList {
   String contentType;
   String contentBgcolor;
 
-  ContentList({this.id, this.itemId, this.title, this.forward, this.imgUrl, this.likeCount, this.postDate, this.lastUpdateDate,  this.audioPlatform, this.startVideo, this.volume, this.picInfo, this.wordsInfo, this.subtitle, this.adId, this.adType, this.adPvurl, this.adLinkurl, this.adMakettime, this.adClosetime, this.adShareCnt, this.adPvurlVendor, this.contentId, this.contentType, this.contentBgcolor});
+  Content({this.id, this.itemId, this.title, this.forward, this.imgUrl, this.likeCount, this.postDate, this.lastUpdateDate,  this.audioPlatform, this.startVideo, this.volume, this.picInfo, this.wordsInfo, this.subtitle, this.adId, this.adType, this.adPvurl, this.adLinkurl, this.adMakettime, this.adClosetime, this.adShareCnt, this.adPvurlVendor, this.contentId, this.contentType, this.contentBgcolor});
 
-  ContentList.fromJson(Map<String, dynamic> json) {
+  Content.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     itemId = json['item_id'];
     title = json['title'];
