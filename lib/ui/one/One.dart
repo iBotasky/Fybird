@@ -24,18 +24,22 @@ class _OnePageState extends State<OnePage> {
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         print("loadMore");
-        _getOneDatas();
+        _getOneDatas(Load.LOAD_MORE);
       }
     });
 
-    _getOneDatas();
+    _getOneDatas(Load.REFRESH);
   }
 
   Future<void> _handleDatas() {
-    return _getOneDatas();
+    return _getOneDatas(Load.REFRESH);
   }
 
-  List<String> _getLast7DaysDate() {
+  List<String> _getLast7DaysDate(Load loadtype) {
+    if(loadtype == Load.REFRESH){
+      _now = DateTime.now();
+    }
+
     final format = DateFormat('yyyy-MM-dd');
     List<String> dates = List<String>();
     for (int i = 0; i < 7; i++) {
@@ -50,8 +54,8 @@ class _OnePageState extends State<OnePage> {
     return dates;
   }
 
-  Future<void> _getOneDatas() async {
-    List<String> dates = _getLast7DaysDate();
+  Future<void> _getOneDatas(Load loadType) async {
+    List<String> dates = _getLast7DaysDate(loadType);
     final _dio = Dio();
     List<Content> datas = List();
     for (String date in dates) {
@@ -61,7 +65,11 @@ class _OnePageState extends State<OnePage> {
     }
 
     setState(() {
-      _datas.addAll(datas);
+      if (loadType == Load.REFRESH) {
+        _datas = datas;
+      } else {
+        _datas.addAll(datas);
+      }
       _isLoadComplete = true;
     });
   }
