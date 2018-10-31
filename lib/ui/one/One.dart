@@ -109,7 +109,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
             width: double.infinity,
             fit: BoxFit.cover,
             height: 240.0,
-            placeholder: 'assets/images/ic_launcher_foreground.png',
+            placeholder: ASSETS_IMAGE_HOLDER,
             image: data.imgUrl),
         Container(
             width: double.infinity,
