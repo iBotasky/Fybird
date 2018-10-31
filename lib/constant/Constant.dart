@@ -17,3 +17,8 @@ String
 
 double
    GOLDEN_RATIO = 0.618;
+
+enum Load{
+  REFRESH,
+  LOAD_MORE,
+}
