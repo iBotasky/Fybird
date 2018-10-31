@@ -33,12 +33,12 @@ class _GirlsPageState extends State<GirlsPage> {
     super.initState();
     _getGirlsData();
 
-//    _controller.addListener(() {
-//      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-//        print('getMoreDatas page $_page');
-//        _getGirlsData();
-//      }
-//    });
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        print('getMoreDatas page $_page');
+        _getGirlsData();
+      }
+    });
   }
 
   @override
@@ -52,10 +52,10 @@ class _GirlsPageState extends State<GirlsPage> {
             crossAxisCount: 2,
             // Generate 100 Widgets that display their index in the List
             childAspectRatio: GOLDEN_RATIO,
-            children: List.generate(_datas.length + 1, (index) {
+            children: List.generate(_datas.length, (index) {
               if (index == _datas.length) {
               } else {
-                return PhotoView(_datas[index]);
+                return PhotoView(girlsData: _datas[index]);
               }
             }),
           );
