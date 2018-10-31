@@ -53,10 +53,7 @@ class _GirlsPageState extends State<GirlsPage> {
             // Generate 100 Widgets that display their index in the List
             childAspectRatio: GOLDEN_RATIO,
             children: List.generate(_datas.length, (index) {
-              if (index == _datas.length) {
-              } else {
                 return PhotoView(girlsData: _datas[index]);
-              }
             }),
           );
   }

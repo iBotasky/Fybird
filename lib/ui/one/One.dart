@@ -15,40 +15,42 @@ class OnePage extends StatefulWidget {
 class _OnePageState extends State<OnePage> {
   List<Content> _datas = List();
   bool _isLoadComplete = false; //用以判断加载状态实现切换界面
+  ScrollController _controller = ScrollController();
+  DateTime _now = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _getOneDatas().then((value) {
-      setState(() {
-        _datas = value;
-        _isLoadComplete = true;
-      });
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        print("loadMore");
+        _getOneDatas();
+      }
     });
+
+    _getOneDatas();
   }
 
   Future<void> _handleDatas() {
-    return _getOneDatas().then((value) {
-      setState(() {
-        _datas = value;
-        _isLoadComplete = true;
-      });
-    });
+    return _getOneDatas();
   }
 
   List<String> _getLast7DaysDate() {
-    DateTime now = DateTime.now();
     final format = DateFormat('yyyy-MM-dd');
     List<String> dates = List<String>();
     for (int i = 0; i < 7; i++) {
-      DateTime dateTime = DateTime(now.year, now.month, now.day - i);
+      DateTime dateTime = DateTime(_now.year, _now.month, _now.day - i);
       print(format.format(dateTime));
       dates.add(format.format(dateTime));
+
+      if (i == 6) {
+        _now = DateTime(_now.year, _now.month, _now.day - 7);
+      }
     }
     return dates;
   }
 
-  Future<List<Content>> _getOneDatas() async {
+  Future<void> _getOneDatas() async {
     List<String> dates = _getLast7DaysDate();
     final _dio = Dio();
     List<Content> datas = List();
@@ -57,7 +59,11 @@ class _OnePageState extends State<OnePage> {
           await _dio.get(URL_ONE_HOST + '/api/channel/one/$date/0');
       datas.add(OneData.fromJson(response.data).data.contentList[0]);
     }
-    return datas;
+
+    setState(() {
+      _datas.addAll(datas);
+      _isLoadComplete = true;
+    });
   }
 
   @override
@@ -68,13 +74,14 @@ class _OnePageState extends State<OnePage> {
           ? RefreshIndicator(
               onRefresh: _handleDatas,
               child: ListView.builder(
+                controller: _controller,
                 itemBuilder: (BuildContext context, int index) {
                   if (index != _datas.length) {
                     return OneDetailItem(
                       data: _datas[index],
                     );
                   } else {
-                    return FooterView();
+                    return LoadMoreView();
                   }
                 },
                 itemCount: _datas.isEmpty ? 0 : _datas.length + 1,
