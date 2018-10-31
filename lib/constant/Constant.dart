@@ -8,10 +8,12 @@ String
 
     //url
     URL_ONE_HOST = 'http://v3.wufazhuce.com:8000',
-    URL_GANK_HOST = 'http://gank.io/',
+    URL_GANK_HOST = 'http://gank.io',
 
 
     //assets
     ASSETS_IMAGE_HOLDER = 'assets/images/ic_launcher_foreground.png';
 
 
+double
+   GOLDEN_RATIO = 0.618;
