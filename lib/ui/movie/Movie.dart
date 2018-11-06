@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 
 class MoviePage extends StatefulWidget {
   @override
@@ -6,10 +7,10 @@ class MoviePage extends StatefulWidget {
 }
 
 class _MoviePageState extends State<MoviePage> {
+
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Movie'),
-    );
+    return LoadingView();
   }
 }
