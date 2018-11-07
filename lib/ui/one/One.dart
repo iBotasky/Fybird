@@ -105,15 +105,13 @@ class OneDetailItem extends StatefulWidget {
   const OneDetailItem({Key key, this.data}) : super(key: key);
 
   @override
-  _OneDetailItemState createState() => _OneDetailItemState(data);
+  _OneDetailItemState createState() => _OneDetailItemState();
 }
 
 class _OneDetailItemState extends State<OneDetailItem> {
-  final Content data;
   final TextStyle _bottom =
       TextStyle(color: Colors.white, fontStyle: FontStyle.italic);
 
-  _OneDetailItemState(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +123,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
             fit: BoxFit.cover,
             height: 240.0,
             placeholder: ASSETS_IMAGE_HOLDER,
-            image: data.imgUrl),
+            image: widget.data.imgUrl),
         Container(
             width: double.infinity,
             height: 240.0,
@@ -151,7 +149,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      data.volume,
+                      widget.data.volume,
                       style: TextStyle(
                           color: Colors.white54,
                           fontWeight: FontWeight.bold,
@@ -160,7 +158,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
                     ),
                     Expanded(
                         child: Center(
-                            child: Text(data.forward,
+                            child: Text(widget.data.forward,
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -168,8 +166,8 @@ class _OneDetailItemState extends State<OneDetailItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('摄影|${data.picInfo}', style: _bottom),
-                        Text(data.wordsInfo, style: _bottom)
+                        Text('摄影|${widget.data.picInfo}', style: _bottom),
+                        Text(widget.data.wordsInfo, style: _bottom)
                       ],
                     )
                   ],
