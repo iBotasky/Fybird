@@ -13,7 +13,6 @@ class DailyPage extends StatefulWidget {
 class _DailyPageState extends State<DailyPage> {
   Load _loadType = Load.LOADING;
   DailyData _dailyData;
-  List<String> _urls;
 
   @override
   void initState() {
@@ -27,6 +26,7 @@ class _DailyPageState extends State<DailyPage> {
 //    for(TopStories top in _dailyData.topStories){
 //      _urls.add(top.image);
 //    }
+    debugPrint('hellworld');
     setState(() {
       _loadType = Load.LOAD_COMPLETE;
       _dailyData = DailyData.fromJson(response.data);
@@ -49,9 +49,7 @@ class _DailyPageState extends State<DailyPage> {
               itemCount: _dailyData.stories.isEmpty
                   ? 0
                   : _dailyData.stories.length + 1,
-            )
-//            child: HeadBanner(topStories: _dailyData.topStories),
-            )
+            ))
         : LoadingView();
   }
 }
@@ -64,45 +62,68 @@ class HeadBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 240,
-        width: double.infinity,
-        child: PageView.builder(
-          itemBuilder: (context, index) {
-            return Stack(children: <Widget>[
-              FadeInImage.assetNetwork(
-                  width: double.infinity,
-                  placeholder: ASSETS_IMAGE_HOLDER,
-                  fit: BoxFit.cover,
-                  image: topStories[index].image),
-              Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    colors: [
-                      // Colors are easy thanks to Flutter's
-                      // Colors class.
-                      Color.fromARGB(210, 0, 0, 0),
-                      Color.fromARGB(100, 0, 0, 0),
-                      Color.fromARGB(30, 0, 0, 0),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                  ))),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
-                  child: Text(
-                    topStories[index].title,
-                    style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),
-                  ),
-                ),
+    final TabController controller = DefaultTabController.of(context);
+    return DefaultTabController(
+        length: topStories.length,
+        child: Container(
+            height: 240,
+            width: double.infinity,
+            child: Stack(children: [
+              PageView.builder(
+                onPageChanged: (index) {
+                  debugPrint
+                    ("Current index is $index");
+                  print("Controller null is ${controller == null}");
+                  controller.animateTo(index);
+                },
+                itemBuilder: (context, index) {
+                  return Stack(children: <Widget>[
+                    FadeInImage.assetNetwork(
+                        width: double.infinity,
+                        placeholder: ASSETS_IMAGE_HOLDER,
+                        fit: BoxFit.cover,
+                        image: topStories[index].image),
+                    Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                          colors: [
+                            // Colors are easy thanks to Flutter's
+                            // Colors class.
+                            Color.fromARGB(210, 0, 0, 0),
+                            Color.fromARGB(100, 0, 0, 0),
+                            Color.fromARGB(30, 0, 0, 0),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ))),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        padding:
+                            EdgeInsets.only(left: 20, bottom: 20, right: 20),
+                        child: Text(
+                          topStories[index].title,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                    ),
+                  ]);
+                },
+                itemCount: topStories.isEmpty ? 0 : topStories.length,
               ),
-            ]);
-          },
-          itemCount: topStories.isEmpty ? 0 : topStories.length,
-        ));
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: TabPageSelector(
+                    controller: controller,
+                    color: Colors.white,
+                    selectedColor: Colors.grey,
+                    indicatorSize: 8,
+                  ))
+            ])));
   }
 }
 //endregion
