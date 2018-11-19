@@ -72,4 +72,12 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animation = null;
+    animationController = null;
+    super.dispose();
+  }
 }
