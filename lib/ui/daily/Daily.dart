@@ -62,7 +62,6 @@ class HeadBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TabController controller = DefaultTabController.of(context);
     return DefaultTabController(
         length: topStories.length,
         child: Container(
@@ -73,6 +72,7 @@ class HeadBanner extends StatelessWidget {
                 onPageChanged: (index) {
                   debugPrint
                     ("Current index is $index");
+                  TabController controller = DefaultTabController.of(context);
                   print("Controller null is ${controller == null}");
                   controller.animateTo(index);
                 },
@@ -118,7 +118,7 @@ class HeadBanner extends StatelessWidget {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: TabPageSelector(
-                    controller: controller,
+                    controller: DefaultTabController.of(context),
                     color: Colors.white,
                     selectedColor: Colors.grey,
                     indicatorSize: 8,
