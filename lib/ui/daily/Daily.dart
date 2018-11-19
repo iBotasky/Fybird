@@ -38,20 +38,20 @@ class _DailyPageState extends State<DailyPage> {
     return this._loadType != Load.LOADING
         ? RefreshIndicator(
             onRefresh: _getDailyDatas,
-//            child: BannerWidget(data: _urls, curve: null,),
             child: ListView.builder(
               itemBuilder: (context, index) {
-//                if (index == 0) {
-//                  return HeadBanner(topStories: _dailyData.topStories);
-//                } else {
-                  return DailyItem(stories: _dailyData.stories[index]);
-//                }
+                if (index == 0) {
+                  return HeadBanner(topStories: _dailyData.topStories);
+                } else {
+                  return DailyItem(stories: _dailyData.stories[index - 1]);
+                }
               },
               itemCount: _dailyData.stories.isEmpty
                   ? 0
-                  : _dailyData.stories.length,
+                  : _dailyData.stories.length + 1,
             )
-          )
+//            child: HeadBanner(topStories: _dailyData.topStories),
+            )
         : LoadingView();
   }
 }
@@ -64,16 +64,45 @@ class HeadBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      itemBuilder: (context, index) {
-        return FadeInImage.assetNetwork(
-            width: double.infinity,
-            height: 150.0,
-            placeholder: ASSETS_IMAGE_HOLDER,
-            image: topStories[index].image);
-      },
-      itemCount: topStories.isEmpty ? 0 : topStories.length,
-    );
+    return Container(
+        height: 240,
+        width: double.infinity,
+        child: PageView.builder(
+          itemBuilder: (context, index) {
+            return Stack(children: <Widget>[
+              FadeInImage.assetNetwork(
+                  width: double.infinity,
+                  placeholder: ASSETS_IMAGE_HOLDER,
+                  fit: BoxFit.cover,
+                  image: topStories[index].image),
+              Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    colors: [
+                      // Colors are easy thanks to Flutter's
+                      // Colors class.
+                      Color.fromARGB(210, 0, 0, 0),
+                      Color.fromARGB(100, 0, 0, 0),
+                      Color.fromARGB(30, 0, 0, 0),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ))),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
+                  child: Text(
+                    topStories[index].title,
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+            ]);
+          },
+          itemCount: topStories.isEmpty ? 0 : topStories.length,
+        ));
   }
 }
 //endregion
