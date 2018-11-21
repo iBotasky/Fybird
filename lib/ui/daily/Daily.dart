@@ -4,7 +4,14 @@ import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/base/banner_widget.dart';
 import 'package:flutter_cybird/ui/daily/DailyData.dart';
+//region 问题
+/**
+ * 1.PageView还未自动轮播
+ * 2.指示器用的TabSelecor,出现一个controller为空无法animaTo指定位置
+ */
 
+
+//endregion
 class DailyPage extends StatefulWidget {
   @override
   _DailyPageState createState() => _DailyPageState();
@@ -62,6 +69,7 @@ class HeadBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TabController _controller = DefaultTabController.of(context);
     return DefaultTabController(
         length: topStories.length,
         child: Container(
@@ -70,11 +78,8 @@ class HeadBanner extends StatelessWidget {
             child: Stack(children: [
               PageView.builder(
                 onPageChanged: (index) {
-                  debugPrint
-                    ("Current index is $index");
-                  TabController controller = DefaultTabController.of(context);
-                  print("Controller null is ${controller == null}");
-                  controller.animateTo(index);
+                  debugPrint("Current index is $index");
+                  print("Controller null is ${_controller == null}");
                 },
                 itemBuilder: (context, index) {
                   return Stack(children: <Widget>[
@@ -118,7 +123,7 @@ class HeadBanner extends StatelessWidget {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: TabPageSelector(
-                    controller: DefaultTabController.of(context),
+                    controller: _controller,
                     color: Colors.white,
                     selectedColor: Colors.grey,
                     indicatorSize: 8,
