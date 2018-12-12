@@ -112,6 +112,30 @@ class Subjects {
     data['id'] = this.id;
     return data;
   }
+
+  String getGenres() {
+    String string = "";
+    for (String s in genres) {
+      string += s + "/";
+    }
+    return string.substring(0, string.length - 1);
+  }
+
+  String getDirectors() {
+    String string = "";
+    for (Directors s in directors) {
+      string += s.name + "/";
+    }
+    return string.substring(0, string.length - 1);
+  }
+
+  String getFirstThreeCasts() {
+    String string = "";
+    for (Casts s in casts) {
+      string += "          " + s.name + "\n";
+    }
+    return string == "" ? "" : string.substring(9, string.length - 1);
+  }
 }
 
 class Rating {
