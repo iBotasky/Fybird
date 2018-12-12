@@ -65,7 +65,7 @@ class _MovieSectionState extends State<MovieSection>
         itemBuilder: (context, index) {
           if (index == 0) {
             return Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
+                padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
                 child: Text(_title,
                     style:
                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold)));
@@ -92,13 +92,13 @@ class MovieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
       child: Row(
         children: <Widget>[
           FadeInImage.assetNetwork(
             placeholder: ASSETS_IMAGE_HOLDER,
             image: subjects.images.large,
-            width: MediaQuery.of(context).size.width / 2,
+            width: MediaQuery.of(context).size.width / 2.5,
             height: 260,
             fit: BoxFit.cover,
           ),
@@ -107,27 +107,41 @@ class MovieItem extends StatelessWidget {
           ),
           Expanded(
               child: Container(
-                height: 260,
+                  height: 260,
                   child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(subjects.title,
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
-              Padding(padding: EdgeInsets.only(top: 10)),
-              Text(subjects.getGenres()),
-              Padding(padding: EdgeInsets.only(top: 10)),
-              Text("导演:${subjects.getDirectors()}"),
-              Padding(padding: EdgeInsets.only(top: 10)),
-              Text("演员:${subjects.getFirstThreeCasts()}"),
-              Padding(padding: EdgeInsets.only(top: 10)),
-              Text("评分:"),
-              StarRating(
-                starCount: 5,
-                rating: subjects.rating.average/2,
-              )
-            ],
-          )))
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(subjects.title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 20)),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      Text(subjects.getGenres()),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      Text("导演:${subjects.getDirectors()}"),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      Text("演员:${subjects.getFirstThreeCasts()}"),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text("评分:"),
+                            Row(children: [
+                              StarRating(
+                                starCount: 5,
+                                rating: subjects.rating.average / 2,
+                              ),
+                              Padding(padding: EdgeInsets.only(left: 15)),
+                              Text("${subjects.rating.average}", style: TextStyle(
+                                fontWeight: FontWeight.bold
+                              ),)
+                            ])
+                          ],
+                        ),
+                      ),
+                    ],
+                  )))
         ],
       ),
     );

@@ -124,9 +124,9 @@ class Subjects {
   String getDirectors() {
     String string = "";
     for (Directors s in directors) {
-      string += s.name + "/";
+      string += "        " +s.name + "\n";
     }
-    return string.substring(0, string.length - 1);
+    return string.substring(9, string.length - 1);
   }
 
   String getFirstThreeCasts() {
