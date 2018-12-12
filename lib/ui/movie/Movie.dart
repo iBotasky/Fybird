@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/MovieSection.dart';
 
 class MoviePage extends StatefulWidget {
@@ -9,26 +8,30 @@ class MoviePage extends StatefulWidget {
 
 class _MoviePageState extends State<MoviePage> {
   List<MovieSection> _sections;
+  PageController _controller;
 
   @override
   void initState() {
     super.initState();
-    _sections = new List();
-    _sections.add(MovieSection(
-      category: Category.TOP250,
-    ));
-    _sections.add(MovieSection(
-      category: Category.IN_THEATERS,
-    ));
-    _sections.add(MovieSection(
-      category: Category.COMING_SOON,
-    ));
+    _sections = [
+      MovieSection(
+        category: Category.TOP250,
+      ),
+      MovieSection(
+        category: Category.IN_THEATERS,
+      ),
+      MovieSection(
+        category: Category.COMING_SOON,
+      )
+    ];
+    _controller = PageController(initialPage: 0, keepPage: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-      onPageChanged: (index){
+      controller: _controller,
+      onPageChanged: (index) {
         print("current index is $index");
       },
       itemBuilder: (context, index) {

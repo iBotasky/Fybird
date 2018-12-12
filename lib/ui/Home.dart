@@ -109,9 +109,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 class AppPage {
   AppPage(
       {Widget icon, String title, Color color, this.body, TickerProvider vsync})
-      : this._icon = icon,
-        this._title = title,
-        this._color = color,
+      : this._title = title,
         this.controller = new AnimationController(
             vsync: vsync, duration: Duration(milliseconds: 200)),
         this.item = new BottomNavigationBarItem(
@@ -123,9 +121,7 @@ class AppPage {
         new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
   }
 
-  final Widget _icon;
   final String _title;
-  final Color _color;
   final AnimationController controller;
   final BottomNavigationBarItem item;
   final Widget body;
