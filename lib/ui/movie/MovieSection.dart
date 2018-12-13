@@ -89,6 +89,21 @@ class MovieItem extends StatelessWidget {
 
   const MovieItem({Key key, this.subjects}) : super(key: key);
 
+  List<Widget> getWidgets() {
+    List<Widget> geners = List();
+    for (String s in subjects.genres) {
+      geners.add(Chip(
+        label: Text(
+          s,
+          style: TextStyle(fontSize: 12),
+        ),
+        labelPadding: EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+        padding: EdgeInsets.all(5),
+      ));
+    }
+    return geners;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -115,11 +130,13 @@ class MovieItem extends StatelessWidget {
                       Text(subjects.title,
                           style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 20)),
-                      Padding(padding: EdgeInsets.only(top: 8)),
-                      Text(subjects.getGenres()),
-                      Padding(padding: EdgeInsets.only(top: 8)),
+//                      Text(subjects.getGenres()),
+                      Wrap(
+                        spacing: 4.0,
+                        alignment: WrapAlignment.start,
+                        children: getWidgets(),
+                      ),
                       Text("导演:${subjects.getDirectors()}"),
-                      Padding(padding: EdgeInsets.only(top: 8)),
                       Text("演员:${subjects.getFirstThreeCasts()}"),
                       Expanded(
                         child: Column(
@@ -133,9 +150,10 @@ class MovieItem extends StatelessWidget {
                                 rating: subjects.rating.average / 2,
                               ),
                               Padding(padding: EdgeInsets.only(left: 15)),
-                              Text("${subjects.rating.average}", style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),)
+                              Text(
+                                "${subjects.rating.average}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
                             ])
                           ],
                         ),

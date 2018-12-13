@@ -17,28 +17,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _items = [
-      new AppPage(
-          icon: new Icon(Icons.account_circle),
+      AppPage(
+          icon: Icon(Icons.account_circle),
           title: 'One',
           color: Colors.black87,
           body: OnePage(),
           vsync: this),
-      new AppPage(
-        icon: new Icon(Icons.movie_filter),
+      AppPage(
+        icon: Icon(Icons.movie_filter),
         title: 'Movie',
         color: Colors.green,
         body: MoviePage(),
         vsync: this,
       ),
-      new AppPage(
-        icon: new Icon(Icons.bookmark),
+      AppPage(
+        icon: Icon(Icons.bookmark),
         title: 'Daily',
         color: Colors.blueAccent.shade400,
         body: DailyPage(),
         vsync: this,
       ),
-      new AppPage(
-        icon: new Icon(Icons.whatshot),
+      AppPage(
+        icon: Icon(Icons.whatshot),
         title: 'Girls',
         color: Colors.pinkAccent.shade400,
         body: GirlsPage(),
@@ -110,15 +110,15 @@ class AppPage {
   AppPage(
       {Widget icon, String title, Color color, this.body, TickerProvider vsync})
       : this._title = title,
-        this.controller = new AnimationController(
+        this.controller = AnimationController(
             vsync: vsync, duration: Duration(milliseconds: 200)),
-        this.item = new BottomNavigationBarItem(
+        this.item = BottomNavigationBarItem(
           icon: icon,
-          title: new Text(title),
+          title: Text(title),
           backgroundColor: color,
         ) {
     _animation =
-        new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
   }
 
   final String _title;
@@ -128,7 +128,7 @@ class AppPage {
   CurvedAnimation _animation;
 
   FadeTransition buildTransition(BuildContext context) {
-    return new FadeTransition(
+    return FadeTransition(
       opacity: _animation,
       child: body,
     );
