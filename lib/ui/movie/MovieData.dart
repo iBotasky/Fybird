@@ -126,7 +126,7 @@ class Subjects {
     for (Directors s in directors) {
       string += "        " +s.name + "\n";
     }
-    return string.substring(9, string.length - 1);
+    return string.substring(8, string.length - 1);
   }
 
   String getFirstThreeCasts() {
