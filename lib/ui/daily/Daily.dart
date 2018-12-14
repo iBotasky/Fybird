@@ -61,7 +61,6 @@ class _DailyPageState extends State<DailyPage> {
   }
 }
 
-//region首页轮播控件
 class HeadBanner extends StatelessWidget {
   final List<TopStories> topStories;
 
@@ -131,9 +130,7 @@ class HeadBanner extends StatelessWidget {
             ])));
   }
 }
-//endregion
 
-//region底部文章Item
 class DailyItem extends StatelessWidget {
   final Stories stories;
 
@@ -169,4 +166,3 @@ class DailyItem extends StatelessWidget {
     );
   }
 }
-//endregion

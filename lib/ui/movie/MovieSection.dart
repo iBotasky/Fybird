@@ -130,7 +130,6 @@ class MovieItem extends StatelessWidget {
                       Text(subjects.title,
                           style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 20)),
-//                      Text(subjects.getGenres()),
                       Wrap(
                         spacing: 4.0,
                         alignment: WrapAlignment.start,
