@@ -22,7 +22,10 @@ class _MovieSectionState extends State<MovieSection>
   String _title;
   String _url;
   int _start;
+  bool _isLoadComplete = false;
+  bool _isDatasEmpty = false;
   List<Subjects> _datas = List();
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
@@ -41,42 +44,65 @@ class _MovieSectionState extends State<MovieSection>
         _url = 'v2/movie/top250';
         break;
     }
-
-    getFilmsData();
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        _getFilmsData(Load.LOAD_MORE);
+      }
+    });
+    _getFilmsData(Load.REFRESH);
   }
 
-  Future<void> getFilmsData() async {
+  Future<void> _handleDatas() {
+    return _getFilmsData(Load.REFRESH);
+  }
+
+  Future<void> _getFilmsData(Load loadType) async {
     final _dio = Dio();
     List<Subjects> datas = List();
     Response response = await _dio
-        .get(URL_MOVIE_HOST + _url, data: {"start": _start, "count": _count});
+        .get(URL_MOVIE_HOST + _url, data: {"start": loadType == Load.REFRESH ? 0 : _start, "count": _count});
     datas.addAll(MovieData.fromJson(response.data).subjects);
-
     setState(() {
-      _datas.addAll(datas);
-      _start = _datas.length + 1;
+      if (loadType == Load.REFRESH) {
+        _datas = datas;
+      } else {
+        _datas.addAll(datas);
+      }
+
+      if (datas.isEmpty) {
+        _isDatasEmpty = true;
+      }
+
+      _start = _datas.length;
+      _isLoadComplete = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
-                child: Text(_title,
-                    style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)));
-          } else if (index == _datas.length + 1) {
-            return LoadMoreView();
-          } else {
-            return MovieItem(subjects: _datas[index - 1]);
-          }
-        },
-        itemCount: _datas == null || _datas.isEmpty ? 0 : _datas.length + 2,
-      ),
+      child: _isLoadComplete
+          ? RefreshIndicator(
+              onRefresh: _handleDatas,
+              child: ListView.builder(
+                controller: _controller,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Padding(
+                        padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+                        child: Text(_title,
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold)));
+                  } else if (index == _datas.length + 1) {
+                    return _isDatasEmpty ? FooterView() : LoadMoreView();
+                  } else {
+                    return MovieItem(subjects: _datas[index - 1]);
+                  }
+                },
+                itemCount:
+                    _datas == null || _datas.isEmpty ? 0 : _datas.length + 2,
+              ))
+          : LoadingView(),
     );
   }
 

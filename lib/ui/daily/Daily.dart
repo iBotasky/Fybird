@@ -2,16 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
-import 'package:flutter_cybird/ui/base/banner_widget.dart';
 import 'package:flutter_cybird/ui/daily/DailyData.dart';
-//region 问题
-/**
- * 1.PageView还未自动轮播
- * 2.指示器用的TabSelecor,出现一个controller为空无法animaTo指定位置
- */
-
-
-//endregion
+///
+///1.PageView还未自动轮播
+///2.指示器用的TabSelecor,出现一个controller为空无法animaTo指定位置
+///
 class DailyPage extends StatefulWidget {
   @override
   _DailyPageState createState() => _DailyPageState();
@@ -30,10 +25,6 @@ class _DailyPageState extends State<DailyPage> {
   Future<void> _getDailyDatas() async {
     final _dio = Dio();
     Response response = await _dio.get(URL_ZHIHU_HOST + '/api/4/news/latest');
-//    for(TopStories top in _dailyData.topStories){
-//      _urls.add(top.image);
-//    }
-    debugPrint('hellworld');
     setState(() {
       _loadType = Load.LOAD_COMPLETE;
       _dailyData = DailyData.fromJson(response.data);
