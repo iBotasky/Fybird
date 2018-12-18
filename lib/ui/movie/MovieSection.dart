@@ -59,8 +59,10 @@ class _MovieSectionState extends State<MovieSection>
   Future<void> _getFilmsData(Load loadType) async {
     final _dio = Dio();
     List<Subjects> datas = List();
-    Response response = await _dio
-        .get(URL_MOVIE_HOST + _url, data: {"start": loadType == Load.REFRESH ? 0 : _start, "count": _count});
+    Response response = await _dio.get(URL_MOVIE_HOST + _url, data: {
+      "start": loadType == Load.REFRESH ? 0 : _start,
+      "count": _count
+    });
     datas.addAll(MovieData.fromJson(response.data).subjects);
     setState(() {
       if (loadType == Load.REFRESH) {
@@ -80,7 +82,8 @@ class _MovieSectionState extends State<MovieSection>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+        body: Container(
       child: _isLoadComplete
           ? RefreshIndicator(
               onRefresh: _handleDatas,
@@ -96,14 +99,19 @@ class _MovieSectionState extends State<MovieSection>
                   } else if (index == _datas.length + 1) {
                     return _isDatasEmpty ? FooterView() : LoadMoreView();
                   } else {
-                    return MovieItem(subjects: _datas[index - 1]);
+                    return GestureDetector(
+                        onTap: () =>
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text(_datas[index-1].title),
+                            )),
+                        child: MovieItem(subjects: _datas[index - 1]));
                   }
                 },
                 itemCount:
                     _datas == null || _datas.isEmpty ? 0 : _datas.length + 2,
               ))
           : LoadingView(),
-    );
+    ));
   }
 
   @override
