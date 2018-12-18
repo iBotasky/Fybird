@@ -99,7 +99,7 @@ class _MovieSectionState extends State<MovieSection>
                   } else if (index == _datas.length + 1) {
                     return _isDatasEmpty ? FooterView() : LoadMoreView();
                   } else {
-                    return GestureDetector(
+                    return InkWell(
                         onTap: () =>
                             Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text(_datas[index-1].title),
