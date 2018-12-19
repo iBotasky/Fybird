@@ -27,6 +27,7 @@ class _MovieSectionState extends State<MovieSection>
   List<Subjects> _datas = List();
   ScrollController _controller = ScrollController();
 
+
   @override
   void initState() {
     super.initState();
