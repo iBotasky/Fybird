@@ -87,7 +87,7 @@ class _MovieSectionState extends State<MovieSection>
       child: _isLoadComplete
           ? RefreshIndicator(
               onRefresh: _handleDatas,
-              child: ListView.builder(
+              child: ListView.separated(
                 controller: _controller,
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -107,6 +107,7 @@ class _MovieSectionState extends State<MovieSection>
                         child: MovieItem(subjects: _datas[index - 1]));
                   }
                 },
+                separatorBuilder: (BuildContext context, int index) => Divider(color: Colors.transparent,),
                 itemCount:
                     _datas == null || _datas.isEmpty ? 0 : _datas.length + 2,
               ))
@@ -123,7 +124,7 @@ class MovieItem extends StatelessWidget {
 
   const MovieItem({Key key, this.subjects}) : super(key: key);
 
-  List<Widget> getWidgets() {
+  List<Widget> getGenersWidgets() {
     List<Widget> geners = List();
     for (String s in subjects.genres) {
       geners.add(Chip(
@@ -141,7 +142,7 @@ class MovieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
       child: Row(
         children: <Widget>[
           FadeInImage.assetNetwork(
@@ -167,7 +168,7 @@ class MovieItem extends StatelessWidget {
                       Wrap(
                         spacing: 4.0,
                         alignment: WrapAlignment.start,
-                        children: getWidgets(),
+                        children: getGenersWidgets(),
                       ),
                       Text("导演:${subjects.getDirectors()}"),
                       Text("演员:${subjects.getFirstThreeCasts()}"),

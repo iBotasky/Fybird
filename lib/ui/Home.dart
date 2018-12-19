@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<AppPage> _items;
   int _currentIndex = 0;
-
+  BottomNavigationBarType _bottomBarType = BottomNavigationBarType.shifting;
   @override
   void initState() {
     super.initState();
@@ -78,9 +78,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {},
+        title: "Fybird",
         theme: ThemeData(primaryColor: Colors.blue[800]),
         home: Scaffold(
           appBar: AppBar(
+            backgroundColor: _bottomBarType == BottomNavigationBarType.shifting ? _items[_currentIndex]._color : Colors.blue[800],
             title: Center(
               child: Text(_items[_currentIndex]._title),
             ),
@@ -89,7 +91,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: _buildPageStack(),
           ),
           bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
+              type: _bottomBarType,
               items: _items
                   .map<BottomNavigationBarItem>(
                       (AppPage appPage) => appPage.item)
@@ -110,6 +112,7 @@ class AppPage {
   AppPage(
       {Widget icon, String title, Color color, this.body, TickerProvider vsync})
       : this._title = title,
+        this._color = color,
         this.controller = AnimationController(
             vsync: vsync, duration: Duration(milliseconds: 200)),
         this.item = BottomNavigationBarItem(
@@ -122,6 +125,7 @@ class AppPage {
   }
 
   final String _title;
+  final Color _color;
   final AnimationController controller;
   final BottomNavigationBarItem item;
   final Widget body;
