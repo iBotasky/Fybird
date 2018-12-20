@@ -14,6 +14,7 @@ class _MoviePageState extends State<MoviePage> {
   @override
   void initState() {
     super.initState();
+
     _sections = [
       MovieSection(
         category: Category.TOP250,

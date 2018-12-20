@@ -19,6 +19,7 @@ class _MovieSectionState extends State<MovieSection>
     with AutomaticKeepAliveClientMixin<MovieSection> {
   //使用这个就不会重新创建一个Widget
   final _count = 20;
+
   String _title;
   String _url;
   int _start;
