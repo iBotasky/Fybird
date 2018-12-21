@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cybird/ui/daily/Daily.dart';
 import 'package:flutter_cybird/ui/girls/Girls.dart';
 import 'package:flutter_cybird/ui/movie/Movie.dart';
+import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 import 'package:flutter_cybird/ui/one/One.dart';
 
 class HomePage extends StatefulWidget {
@@ -77,7 +78,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        routes: {},
+        routes: {
+          '/movie/movie_detail': (BuildContext context) => MovieDetail(),
+        },
         title: "Fybird",
         theme: ThemeData(primaryColor: Colors.blue[800]),
         home: Scaffold(

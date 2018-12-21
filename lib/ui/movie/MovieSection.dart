@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/MovieData.dart';
+import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 
 enum Category { IN_THEATERS, COMING_SOON, TOP250 }
 
@@ -27,7 +28,6 @@ class _MovieSectionState extends State<MovieSection>
   bool _isDatasEmpty = false;
   List<Subjects> _datas = List();
   ScrollController _controller = ScrollController();
-
 
   @override
   void initState() {
@@ -102,14 +102,14 @@ class _MovieSectionState extends State<MovieSection>
                     return _isDatasEmpty ? FooterView() : LoadMoreView();
                   } else {
                     return InkWell(
-                        onTap: () =>
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(_datas[index-1].title),
-                            )),
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(MovieDetail.routeName),
                         child: MovieItem(subjects: _datas[index - 1]));
                   }
                 },
-                separatorBuilder: (BuildContext context, int index) => Divider(color: Colors.transparent,),
+                separatorBuilder: (BuildContext context, int index) => Divider(
+                      color: Colors.transparent,
+                    ),
                 itemCount:
                     _datas == null || _datas.isEmpty ? 0 : _datas.length + 2,
               ))
