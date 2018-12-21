@@ -5,7 +5,6 @@ import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/daily/DailyData.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-
 class DailyPage extends StatefulWidget {
   @override
   _DailyPageState createState() => _DailyPageState();
@@ -98,7 +97,13 @@ class HeadBanner extends StatelessWidget {
             ]);
           },
           itemCount: topStories.isEmpty ? 0 : topStories.length,
-          pagination: SwiperPagination(margin: EdgeInsets.all(5)),
+          pagination: SwiperPagination(
+              margin: EdgeInsets.all(5),
+              builder: DotSwiperPaginationBuilder(
+                  activeColor: Colors.blue[800],
+                  color: Colors.white,
+                  size: 8,
+                  activeSize: 8)),
           controller: SwiperController(),
           loop: true,
           autoplay: true,
