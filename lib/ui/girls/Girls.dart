@@ -35,7 +35,6 @@ class _GirlsPageState extends State<GirlsPage> {
 
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        print('getMoreDatas page $_page');
         _getGirlsData();
       }
     });

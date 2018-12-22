@@ -2,9 +2,9 @@ String
     //Router
     ANIMATED_SPLASH = '/SplashScreen',
     HOME_SCREEN = '/HomeScreen',
-    PHOTO_CONTAINER_SCREEN = '/PhotoContainerScreen',
-    VIDEO_CONTAINER_SCREEN = '/VideoContainerScreen',
-    ALBUM_CONTAINER_SCREEN = '/AlbumContainerScreen',
+
+    MOVIE_DETAIL = '/movie/movie_detail',
+    DAILY_DETAIL = '/daily/daily_detail',
 
     //url
     URL_ONE_HOST = 'http://v3.wufazhuce.com:8000',

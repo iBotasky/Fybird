@@ -38,13 +38,15 @@ class _DailyPageState extends State<DailyPage> {
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return HeadBanner(topStories: _dailyData.topStories);
+                } else if (index == _dailyData.stories.length + 1) {
+                  return FooterView();
                 } else {
                   return DailyItem(stories: _dailyData.stories[index - 1]);
                 }
               },
               itemCount: _dailyData.stories.isEmpty
                   ? 0
-                  : _dailyData.stories.length + 1,
+                  : _dailyData.stories.length + 2,
             ))
         : LoadingView();
   }

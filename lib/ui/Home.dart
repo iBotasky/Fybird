@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/daily/Daily.dart';
 import 'package:flutter_cybird/ui/girls/Girls.dart';
 import 'package:flutter_cybird/ui/movie/Movie.dart';
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<AppPage> _items;
   int _currentIndex = 0;
   BottomNavigationBarType _bottomBarType = BottomNavigationBarType.shifting;
+
   @override
   void initState() {
     super.initState();
@@ -41,7 +43,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       AppPage(
         icon: Icon(Icons.whatshot),
         title: 'Girls',
-        color: Colors.pinkAccent.shade400,
+        color: Colors.pinkAccent.shade200,
         body: GirlsPage(),
         vsync: this,
       ),
@@ -79,13 +81,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-          '/movie/movie_detail': (BuildContext context) => MovieDetail(),
+          MOVIE_DETAIL: (BuildContext context) => MovieDetail(),
         },
-        title: "Fybird",
         theme: ThemeData(primaryColor: Colors.blue[800]),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: _bottomBarType == BottomNavigationBarType.shifting ? _items[_currentIndex]._color : Colors.blue[800],
+            backgroundColor: _bottomBarType == BottomNavigationBarType.shifting
+                ? _items[_currentIndex]._color
+                : Colors.blue[800],
             title: Center(
               child: Text(_items[_currentIndex]._title),
             ),
