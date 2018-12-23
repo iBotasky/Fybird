@@ -80,6 +80,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        title: 'Fybird',
         routes: {
           MOVIE_DETAIL: (BuildContext context) => MovieDetail(),
         },

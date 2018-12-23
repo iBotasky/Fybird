@@ -23,7 +23,6 @@ class _OnePageState extends State<OnePage> {
     super.initState();
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        print("loadMore");
         _getOneDatas(Load.LOAD_MORE);
       }
     });
@@ -44,7 +43,6 @@ class _OnePageState extends State<OnePage> {
     List<String> dates = List<String>();
     for (int i = 0; i < 7; i++) {
       DateTime dateTime = DateTime(_now.year, _now.month, _now.day - i);
-      print(format.format(dateTime));
       dates.add(format.format(dateTime));
 
       if (i == 6) {

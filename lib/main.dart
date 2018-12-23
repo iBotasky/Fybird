@@ -6,7 +6,6 @@ import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 
 void main() => runApp(MaterialApp(
       home: SplashScreen(),
-      title: "Fybird",
       routes: {
         HOME_SCREEN: (BuildContext context) => HomePage(),
         ANIMATED_SPLASH: (BuildContext context) => new SplashScreen(),
