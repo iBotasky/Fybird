@@ -13,10 +13,11 @@ class OnePage extends StatefulWidget {
 }
 
 class _OnePageState extends State<OnePage> {
-  List<Content> _datas = List();
+  List<Content> _datas;
   bool _isLoadComplete = false; //用以判断加载状态实现切换界面
   ScrollController _controller = ScrollController();
   DateTime _now = DateTime.now();
+  Dio _dio;
 
   @override
   void initState() {
@@ -26,7 +27,15 @@ class _OnePageState extends State<OnePage> {
         _getOneDatas(Load.LOAD_MORE);
       }
     });
+    //初始化DIO
+    Options _option = Options(
+      baseUrl: URL_ONE_HOST,
+      connectTimeout: 20000,
+      receiveTimeout: 3000,
+    );
+    _dio = Dio(_option);
 
+    //获取数据
     _getOneDatas(Load.REFRESH);
   }
 
@@ -54,11 +63,9 @@ class _OnePageState extends State<OnePage> {
 
   Future<void> _getOneDatas(Load loadType) async {
     List<String> dates = _getLast7DaysDate(loadType);
-    final _dio = Dio();
     List<Content> datas = List();
     for (String date in dates) {
-      Response response =
-          await _dio.get(URL_ONE_HOST + '/api/channel/one/$date/0');
+      Response response = await _dio.get('/api/channel/one/$date/0');
       datas.add(OneData.fromJson(response.data).data.contentList[0]);
     }
 

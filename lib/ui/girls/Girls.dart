@@ -14,12 +14,33 @@ class _GirlsPageState extends State<GirlsPage> {
   bool _isLoading = true;
   List<Results> _datas = List();
   ScrollController _controller = ScrollController();
+  Dio _dio;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        _getGirlsData();
+      }
+    });
+
+    _dio = Dio(Options(
+      baseUrl: URL_GANK_HOST,
+      connectTimeout: 10000,
+      receiveTimeout: 3000,
+    ));
+
+    _getGirlsData();
+
+  }
+
 
   Future<void> _getGirlsData() async {
-    final _dio = Dio();
     List<Results> datas = List();
     Response response =
-        await _dio.get(URL_GANK_HOST + '/api/data/福利/20/$_page');
+        await _dio.get('/api/data/福利/20/$_page');
     datas.addAll(GirlsData.fromJson(response.data).results);
     setState(() {
       _datas.addAll(datas);
@@ -28,17 +49,7 @@ class _GirlsPageState extends State<GirlsPage> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _getGirlsData();
 
-    _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        _getGirlsData();
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

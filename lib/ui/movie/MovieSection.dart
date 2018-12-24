@@ -18,16 +18,17 @@ class MovieSection extends StatefulWidget {
 
 class _MovieSectionState extends State<MovieSection>
     with AutomaticKeepAliveClientMixin<MovieSection> {
-  //使用这个就不会重新创建一个Widget
-  final _count = 20;
+  //使用这个AutomaticKeepAliveClientMixin就不会重新创建一个Widget
 
+  final _count = 20;
   String _title;
   String _url;
   int _start;
   bool _isLoadComplete = false;
   bool _isDatasEmpty = false;
-  List<Subjects> _datas = List();
-  ScrollController _controller = ScrollController();
+  List<Subjects> _datas;
+  ScrollController _controller;
+  Dio _dio;
 
   @override
   void initState() {
@@ -46,11 +47,19 @@ class _MovieSectionState extends State<MovieSection>
         _url = 'v2/movie/top250';
         break;
     }
+    _controller = ScrollController();
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         _getFilmsData(Load.LOAD_MORE);
       }
     });
+
+    _dio = Dio(Options(
+      baseUrl: URL_MOVIE_HOST,
+      connectTimeout: 10000,
+      receiveTimeout: 3000,
+    ));
+
     _getFilmsData(Load.REFRESH);
   }
 
@@ -59,9 +68,8 @@ class _MovieSectionState extends State<MovieSection>
   }
 
   Future<void> _getFilmsData(Load loadType) async {
-    final _dio = Dio();
     List<Subjects> datas = List();
-    Response response = await _dio.get(URL_MOVIE_HOST + _url, data: {
+    Response response = await _dio.get(_url, data: {
       "start": loadType == Load.REFRESH ? 0 : _start,
       "count": _count
     });

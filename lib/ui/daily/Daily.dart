@@ -13,15 +13,22 @@ class DailyPage extends StatefulWidget {
 class _DailyPageState extends State<DailyPage> {
   Load _loadType = Load.LOADING;
   DailyData _dailyData;
+  Dio _dio;
 
   @override
   void initState() {
     super.initState();
+
+    _dio = Dio(Options(
+      baseUrl: URL_ZHIHU_HOST,
+      connectTimeout: 10000,
+      receiveTimeout: 3000,
+    ));
+
     _getDailyDatas();
   }
 
   Future<void> _getDailyDatas() async {
-    final _dio = Dio();
     Response response = await _dio.get(URL_ZHIHU_HOST + '/api/4/news/latest');
     setState(() {
       _loadType = Load.LOAD_COMPLETE;
