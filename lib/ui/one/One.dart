@@ -44,7 +44,7 @@ class _OnePageState extends State<OnePage> {
   }
 
   List<String> _getLast7DaysDate(Load loadtype) {
-    if(loadtype == Load.REFRESH){
+    if (loadtype == Load.REFRESH) {
       _now = DateTime.now();
     }
 
@@ -116,7 +116,6 @@ class OneDetailItem extends StatefulWidget {
 class _OneDetailItemState extends State<OneDetailItem> {
   final TextStyle _bottom =
       TextStyle(color: Colors.white, fontStyle: FontStyle.italic);
-
 
   @override
   Widget build(BuildContext context) {

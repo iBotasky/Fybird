@@ -5,15 +5,23 @@ import 'package:flutter/services.dart';
 enum AppBarBehavior { normal, pinned, floating, snapping }
 
 class MovieDetail extends StatefulWidget {
+  final String title;
+  final String id;
+
   static const String routeName = '/movie/movie_detail';
+
+  const MovieDetail({Key key, this.title, this.id}) : super(key: key);
+
   @override
   _MovieDetailState createState() => _MovieDetailState();
 }
 
 class _MovieDetailState extends State<MovieDetail> {
-  static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
-  AppBarBehavior _appBarBehavior = AppBarBehavior.pinned;
+  AppBarBehavior _appBarBehavior = AppBarBehavior.normal;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +31,8 @@ class _MovieDetailState extends State<MovieDetail> {
           SliverAppBar(
             expandedHeight: _appBarHeight,
             pinned: _appBarBehavior == AppBarBehavior.pinned,
-            floating: _appBarBehavior == AppBarBehavior.floating || _appBarBehavior == AppBarBehavior.snapping,
+            floating: _appBarBehavior == AppBarBehavior.floating ||
+                _appBarBehavior == AppBarBehavior.snapping,
             snap: _appBarBehavior == AppBarBehavior.snapping,
             actions: <Widget>[
               IconButton(
@@ -31,9 +40,8 @@ class _MovieDetailState extends State<MovieDetail> {
                 tooltip: 'Edit',
                 onPressed: () {
                   _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                      content: Text("Editing isn't supported in this screen.")
-                  ));
-
+                      content:
+                          Text("Editing isn't supported in this screen.")));
                 },
               ),
               PopupMenuButton<AppBarBehavior>(
@@ -42,28 +50,26 @@ class _MovieDetailState extends State<MovieDetail> {
                     _appBarBehavior = value;
                   });
                 },
-                itemBuilder: (BuildContext context) => <PopupMenuItem<AppBarBehavior>>[
-                  const PopupMenuItem<AppBarBehavior>(
-                      value: AppBarBehavior.normal,
-                      child: Text('App bar scrolls away')
-                  ),
-                  const PopupMenuItem<AppBarBehavior>(
-                      value: AppBarBehavior.pinned,
-                      child: Text('App bar stays put')
-                  ),
-                  const PopupMenuItem<AppBarBehavior>(
-                      value: AppBarBehavior.floating,
-                      child: Text('App bar floats')
-                  ),
-                  const PopupMenuItem<AppBarBehavior>(
-                      value: AppBarBehavior.snapping,
-                      child: Text('App bar snaps')
-                  ),
-                ],
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuItem<AppBarBehavior>>[
+                      const PopupMenuItem<AppBarBehavior>(
+                          value: AppBarBehavior.normal,
+                          child: Text('App bar scrolls away')),
+                      const PopupMenuItem<AppBarBehavior>(
+                          value: AppBarBehavior.pinned,
+                          child: Text('App bar stays put')),
+                      const PopupMenuItem<AppBarBehavior>(
+                          value: AppBarBehavior.floating,
+                          child: Text('App bar floats')),
+                      const PopupMenuItem<AppBarBehavior>(
+                          value: AppBarBehavior.snapping,
+                          child: Text('App bar snaps')),
+                    ],
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
-              title: const Text('Movie Title'),
+              title:
+                  Text(widget.title == null ? "Title is null" : widget.title),
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
@@ -99,8 +105,8 @@ class _MovieDetailState extends State<MovieDetail> {
                       tooltip: 'Send message',
                       onPressed: () {
                         _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                            content: Text('Pretend that this opened your SMS application.')
-                        ));
+                            content: Text(
+                                'Pretend that this opened your SMS application.')));
                       },
                       lines: const <String>[
                         '(650) 555-1234',
@@ -112,8 +118,7 @@ class _MovieDetailState extends State<MovieDetail> {
                       tooltip: 'Send message',
                       onPressed: () {
                         _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                            content: Text('A messaging app appears.')
-                        ));
+                            content: Text('A messaging app appears.')));
                       },
                       lines: const <String>[
                         '(323) 555-6789',
@@ -125,8 +130,8 @@ class _MovieDetailState extends State<MovieDetail> {
                       tooltip: 'Send message',
                       onPressed: () {
                         _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                            content: Text('Imagine if you will, a messaging application.')
-                        ));
+                            content: Text(
+                                'Imagine if you will, a messaging application.')));
                       },
                       lines: const <String>[
                         '(650) 555-6789',
@@ -144,8 +149,8 @@ class _MovieDetailState extends State<MovieDetail> {
                     tooltip: 'Send personal e-mail',
                     onPressed: () {
                       _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text('Here, your e-mail application would open.')
-                      ));
+                          content: Text(
+                              'Here, your e-mail application would open.')));
                     },
                     lines: const <String>[
                       'ali_connors@example.com',
@@ -157,8 +162,8 @@ class _MovieDetailState extends State<MovieDetail> {
                     tooltip: 'Send work e-mail',
                     onPressed: () {
                       _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text('Summon your favorite e-mail application here.')
-                      ));
+                          content: Text(
+                              'Summon your favorite e-mail application here.')));
                     },
                     lines: const <String>[
                       'aliconnors@example.com',
@@ -175,8 +180,8 @@ class _MovieDetailState extends State<MovieDetail> {
                     tooltip: 'Open map',
                     onPressed: () {
                       _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text('This would show a map of San Francisco.')
-                      ));
+                          content:
+                              Text('This would show a map of San Francisco.')));
                     },
                     lines: const <String>[
                       '2000 Main Street',
@@ -189,8 +194,8 @@ class _MovieDetailState extends State<MovieDetail> {
                     tooltip: 'Open map',
                     onPressed: () {
                       _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text('This would show a map of Mountain View.')
-                      ));
+                          content:
+                              Text('This would show a map of Mountain View.')));
                     },
                     lines: const <String>[
                       '1600 Amphitheater Parkway',
@@ -203,8 +208,8 @@ class _MovieDetailState extends State<MovieDetail> {
                     tooltip: 'Open map',
                     onPressed: () {
                       _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text('This would also show a map, if this was not a demo.')
-                      ));
+                          content: Text(
+                              'This would also show a map, if this was not a demo.')));
                     },
                     lines: const <String>[
                       '126 Severyns Ave',
@@ -252,7 +257,7 @@ class _MovieDetailState extends State<MovieDetail> {
 }
 
 class _ContactItem extends StatelessWidget {
-  _ContactItem({ Key key, this.icon, this.lines, this.tooltip, this.onPressed })
+  _ContactItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
       : assert(lines.length > 1),
         super(key: key);
 
@@ -264,16 +269,17 @@ class _ContactItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final List<Widget> columnChildren = lines.sublist(0, lines.length - 1).map<Widget>((String line) => Text(line)).toList();
+    final List<Widget> columnChildren = lines
+        .sublist(0, lines.length - 1)
+        .map<Widget>((String line) => Text(line))
+        .toList();
     columnChildren.add(Text(lines.last, style: themeData.textTheme.caption));
 
     final List<Widget> rowChildren = <Widget>[
       Expanded(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: columnChildren
-          )
-      )
+              children: columnChildren))
     ];
     if (icon != null) {
       rowChildren.add(SizedBox(
@@ -281,24 +287,20 @@ class _ContactItem extends StatelessWidget {
           child: IconButton(
               icon: Icon(icon),
               color: themeData.primaryColor,
-              onPressed: onPressed
-          )
-      ));
+              onPressed: onPressed)));
     }
     return MergeSemantics(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: rowChildren
-          )
-      ),
+              children: rowChildren)),
     );
   }
 }
 
 class _ContactCategory extends StatelessWidget {
-  const _ContactCategory({ Key key, this.icon, this.children }) : super(key: key);
+  const _ContactCategory({Key key, this.icon, this.children}) : super(key: key);
 
   final IconData icon;
   final List<Widget> children;
@@ -309,8 +311,7 @@ class _ContactCategory extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: themeData.dividerColor))
-      ),
+          border: Border(bottom: BorderSide(color: themeData.dividerColor))),
       child: DefaultTextStyle(
         style: Theme.of(context).textTheme.subhead,
         child: SafeArea(
@@ -322,8 +323,7 @@ class _ContactCategory extends StatelessWidget {
               Container(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
                   width: 72.0,
-                  child: Icon(icon, color: themeData.primaryColor)
-              ),
+                  child: Icon(icon, color: themeData.primaryColor)),
               Expanded(child: Column(children: children))
             ],
           ),

@@ -110,8 +110,14 @@ class _MovieSectionState extends State<MovieSection>
                     return _isDatasEmpty ? FooterView() : LoadMoreView();
                   } else {
                     return InkWell(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(MovieDetail.routeName),
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => MovieDetail(
+                                    title: _datas[index - 1].title,
+                                    id: _datas[index - 1].id,
+                                  ),
+                            )),
                         child: MovieItem(subjects: _datas[index - 1]));
                   }
                 },
