@@ -40,14 +40,13 @@ class _MovieDetailState extends State<MovieDetail> {
   }
 
   //数据请求
-  Future<void> _getMovieDetail() async{
+  Future<void> _getMovieDetail() async {
     Response response = await _dio.get('subject/${widget.id}');
     setState(() {
       _movieDetailData = MovieDetailData.fromJson(response.data);
-      print("${_movieDetailData.title + " " + _movieDetailData.rating.stars }");
+      print("${_movieDetailData.title + " " + _movieDetailData.rating.stars}");
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
