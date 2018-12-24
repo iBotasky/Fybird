@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
-import 'package:flutter_cybird/ui/one/OneData.dart';
+import 'package:flutter_cybird/ui/one/data/OneData.dart';
 import 'package:intl/intl.dart';
 
 class OnePage extends StatefulWidget {

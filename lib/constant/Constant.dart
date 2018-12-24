@@ -9,7 +9,7 @@ String
     //url
     URL_ONE_HOST = 'http://v3.wufazhuce.com:8000',
     URL_GANK_HOST = 'http://gank.io',
-    URL_MOVIE_HOST = 'https://api.douban.com/',
+    URL_MOVIE_HOST = 'https://api.douban.com/v2/movie/',
     URL_ZHIHU_HOST = 'http://news-at.zhihu.com',
 
     //assets

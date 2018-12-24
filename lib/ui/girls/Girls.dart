@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
-import 'package:flutter_cybird/ui/girls/GirlsData.dart';
+import 'package:flutter_cybird/ui/girls/data/GirlsData.dart';
 
 class GirlsPage extends StatefulWidget {
   @override

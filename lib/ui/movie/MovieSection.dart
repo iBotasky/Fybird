@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
-import 'package:flutter_cybird/ui/movie/MovieData.dart';
+import 'package:flutter_cybird/ui/movie/data/MovieData.dart';
 import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 import 'package:flutter_cybird/uitl/NavigatorUtils.dart';
 
@@ -37,15 +37,15 @@ class _MovieSectionState extends State<MovieSection>
     switch (widget.category) {
       case Category.IN_THEATERS:
         _title = "影院热映";
-        _url = 'v2/movie/in_theaters';
+        _url = 'in_theaters';
         break;
       case Category.COMING_SOON:
         _title = "即将上映";
-        _url = 'v2/movie/coming_soon';
+        _url = 'coming_soon';
         break;
       case Category.TOP250:
         _title = "豆瓣250";
-        _url = 'v2/movie/top250';
+        _url = 'top250';
         break;
     }
     _controller = ScrollController();

@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cybird/constant/Constant.dart';
+import 'package:flutter_cybird/ui/movie/data/MovieDetailData.dart';
 
 /// AppBarBehavior
 enum AppBarBehavior { normal, pinned, floating, snapping }
@@ -20,7 +23,31 @@ class _MovieDetailState extends State<MovieDetail> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
-  AppBarBehavior _appBarBehavior = AppBarBehavior.normal;
+  Dio _dio;
+  MovieDetailData _movieDetailData;
+  AppBarBehavior _appBarBehavior;
+
+  @override
+  void initState() {
+    super.initState();
+    //初始化
+    _appBarBehavior = AppBarBehavior.normal;
+
+    _dio = Dio(Options(
+        baseUrl: URL_MOVIE_HOST, connectTimeout: 10000, receiveTimeout: 3000));
+
+    _getMovieDetail();
+  }
+
+  //数据请求
+  Future<void> _getMovieDetail() async{
+    Response response = await _dio.get('subject/${widget.id}');
+    setState(() {
+      _movieDetailData = MovieDetailData.fromJson(response.data);
+      print("${_movieDetailData.title + " " + _movieDetailData.rating.stars }");
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
