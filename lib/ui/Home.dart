@@ -81,9 +81,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Fybird',
-        routes: {
-          MOVIE_DETAIL: (BuildContext context) => MovieDetail(),
-        },
         theme: ThemeData(primaryColor: Colors.blue[800]),
         home: Scaffold(
           appBar: AppBar(

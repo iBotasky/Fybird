@@ -4,6 +4,7 @@ import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/MovieData.dart';
 import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
+import 'package:flutter_cybird/uitl/NavigatorUtils.dart';
 
 enum Category { IN_THEATERS, COMING_SOON, TOP250 }
 
@@ -110,14 +111,8 @@ class _MovieSectionState extends State<MovieSection>
                     return _isDatasEmpty ? FooterView() : LoadMoreView();
                   } else {
                     return InkWell(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => MovieDetail(
-                                    title: _datas[index - 1].title,
-                                    id: _datas[index - 1].id,
-                                  ),
-                            )),
+                        onTap: () => NavigatorUtils.toMovieDetail(context,
+                            _datas[index - 1].title, _datas[index - 1].id),
                         child: MovieItem(subjects: _datas[index - 1]));
                   }
                 },
