@@ -181,6 +181,7 @@ class _SummrySection extends StatelessWidget {
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
           ),
+          Padding(padding: EdgeInsets.only(top: 20)),
           Text(data.summary)
         ],
       ),
@@ -253,14 +254,13 @@ class _CastSection extends StatelessWidget {
   final List<Members> data;
 
   const _CastSection({Key key, this.data}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
         height: 270,
         margin: EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 40),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -277,7 +277,7 @@ class _CastSection extends StatelessWidget {
                         return _CastItem(member: data[index]);
                       },
                       separatorBuilder: (context, index) =>
-                          Divider(color: Colors.transparent),
+                          VerticalDivider(width: 10, color: Colors.transparent),
                       itemCount: data.length,
                       scrollDirection: Axis.horizontal))
             ]));
@@ -286,24 +286,26 @@ class _CastSection extends StatelessWidget {
 
 class _CastItem extends StatelessWidget {
   final Members member;
-
   const _CastItem({Key key, this.member}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double _itemWidth = 160 * GOLDEN_RATIO;
+    final double _itemHeight = 160;
     return Container(
-        width: 150 * GOLDEN_RATIO,
-        margin: EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             FadeInImage.assetNetwork(
-                height: 150,
-                width: 150 * GOLDEN_RATIO,
+                height: _itemHeight,
+                width: _itemWidth,
                 placeholder: ASSETS_IMAGE_HOLDER,
                 image: member.avatarUrl),
-            Text(member.name),
+            Container(
+              width: _itemWidth,
+                child: Text(member.name,
+                    softWrap: false, overflow: TextOverflow.ellipsis)),
             Text(member.type == CastsType.director ? "导演" : "")
           ],
         ));
