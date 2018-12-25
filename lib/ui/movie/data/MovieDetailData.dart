@@ -34,16 +34,12 @@ class MovieDetailData {
         this.id,
         this.mobileUrl,
         this.title,
-        this.doCount,
         this.shareUrl,
-        this.seasonsCount,
         this.scheduleUrl,
-        this.episodesCount,
         this.countries,
         this.genres,
         this.collectCount,
         this.casts,
-        this.currentSeason,
         this.originalTitle,
         this.summary,
         this.subtype,
@@ -51,6 +47,26 @@ class MovieDetailData {
         this.commentsCount,
         this.ratingsCount,
         this.aka});
+
+  List<Members> getMembers(){
+    List<Members> members = List();
+    for(Directors director in this.directors){
+      members.add(Members(director.name, director.avatars.large, CastsType.director));
+    }
+    for(Casts casts in this.casts){
+      members.add(Members(casts.name, casts.avatars.large, CastsType.actor));
+    }
+    return members;
+  }
+
+
+  String getGenres() {
+    String string = "";
+    for (String s in genres) {
+      string += s + "/";
+    }
+    return string.substring(0, string.length - 1);
+  }
 
   MovieDetailData.fromJson(Map<String, dynamic> json) {
     rating =
@@ -65,11 +81,8 @@ class MovieDetailData {
     id = json['id'];
     mobileUrl = json['mobile_url'];
     title = json['title'];
-    doCount = json['do_count'];
     shareUrl = json['share_url'];
-    seasonsCount = json['seasons_count'];
     scheduleUrl = json['schedule_url'];
-    episodesCount = json['episodes_count'];
     countries = json['countries'].cast<String>();
     genres = json['genres'].cast<String>();
     collectCount = json['collect_count'];
@@ -79,7 +92,6 @@ class MovieDetailData {
         casts.add(new Casts.fromJson(v));
       });
     }
-    currentSeason = json['current_season'];
     originalTitle = json['original_title'];
     summary = json['summary'];
     subtype = json['subtype'];
@@ -110,18 +122,14 @@ class MovieDetailData {
     data['id'] = this.id;
     data['mobile_url'] = this.mobileUrl;
     data['title'] = this.title;
-    data['do_count'] = this.doCount;
     data['share_url'] = this.shareUrl;
-    data['seasons_count'] = this.seasonsCount;
     data['schedule_url'] = this.scheduleUrl;
-    data['episodes_count'] = this.episodesCount;
     data['countries'] = this.countries;
     data['genres'] = this.genres;
     data['collect_count'] = this.collectCount;
     if (this.casts != null) {
       data['casts'] = this.casts.map((v) => v.toJson()).toList();
     }
-    data['current_season'] = this.currentSeason;
     data['original_title'] = this.originalTitle;
     data['summary'] = this.summary;
     data['subtype'] = this.subtype;
@@ -134,6 +142,17 @@ class MovieDetailData {
     return data;
   }
 }
+
+enum CastsType{director, actor}
+
+class Members{
+  String name;
+  String avatarUrl;
+  CastsType type;
+
+  Members(this.name, this.avatarUrl, this.type);
+}
+
 
 class Rating {
   int max;

@@ -56,6 +56,38 @@ class _MovieDetailState extends State<MovieDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+//      body: ListView(
+//        // This next line does the trick.
+//        scrollDirection: Axis.horizontal,
+//        children: <Widget>[
+//          Container(
+//            width: 160.0,
+//            height: 250.0,
+//            color: Colors.red,
+//          ),
+//          Container(
+//            width: 160.0,
+//            height: 250.0,
+//            color: Colors.blue,
+//          ),
+//          Container(
+//            width: 160.0,
+//            height: 250.0,
+//            color: Colors.green,
+//          ),
+//          Container(
+//            width: 160.0,
+//            height: 250.0,
+//            color: Colors.yellow,
+//          ),
+//          Container(
+//            width: 160.0,
+//            height: 250.0,
+//            color: Colors.orange,
+//          ),
+//        ],
+//      ),
+
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -98,7 +130,9 @@ class _MovieDetailState extends State<MovieDetail> {
             ),
           ),
           isLoadComplete
-              ? _MovieDetailInfo(data: _movieDetailData,)
+              ? _MovieDetailInfo(
+                  data: _movieDetailData,
+                )
               : SliverToBoxAdapter(
                   //这里暂时没有想法说去让LoadView居中，暂时加个Container实现居中
                   child: Container(height: 400, child: LoadingView()),
@@ -116,87 +150,162 @@ class _MovieDetailInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(delegate: SliverChildListDelegate([]));
+    return SliverList(
+        delegate: SliverChildListDelegate([
+      _HeadSection(
+        data: data,
+      ),
+      _SummrySection(data: data),
+      _CastSection(
+        data: data.getMembers(),
+      )
+    ]));
   }
 }
 
+class _SummrySection extends StatelessWidget {
+  final MovieDetailData data;
 
-
-
-
-class _ContactItem extends StatelessWidget {
-  _ContactItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
-      : assert(lines.length > 1),
-        super(key: key);
-
-  final IconData icon;
-  final List<String> lines;
-  final String tooltip;
-  final VoidCallback onPressed;
+  const _SummrySection({Key key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final List<Widget> columnChildren = lines
-        .sublist(0, lines.length - 1)
-        .map<Widget>((String line) => Text(line))
-        .toList();
-    columnChildren.add(Text(lines.last, style: themeData.textTheme.caption));
-
-    final List<Widget> rowChildren = <Widget>[
-      Expanded(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: columnChildren))
-    ];
-    if (icon != null) {
-      rowChildren.add(SizedBox(
-          width: 72.0,
-          child: IconButton(
-              icon: Icon(icon),
-              color: themeData.primaryColor,
-              onPressed: onPressed)));
-    }
-    return MergeSemantics(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: rowChildren)),
-    );
-  }
-}
-
-class _ContactCategory extends StatelessWidget {
-  const _ContactCategory({Key key, this.icon, this.children}) : super(key: key);
-
-  final IconData icon;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: themeData.dividerColor))),
-      child: DefaultTextStyle(
-        style: Theme.of(context).textTheme.subhead,
-        child: SafeArea(
-          top: false,
-          bottom: false,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  width: 72.0,
-                  child: Icon(icon, color: themeData.primaryColor)),
-              Expanded(child: Column(children: children))
-            ],
+      margin: EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "简介",
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
           ),
-        ),
+          Text(data.summary)
+        ],
       ),
     );
+  }
+}
+
+class _HeadSection extends StatelessWidget {
+  final MovieDetailData data;
+
+  const _HeadSection({Key key, this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 135,
+      margin: EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(data.title,
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+              Text(data.year + "/" + data.getGenres(),
+                  style: TextStyle(color: Colors.grey)),
+              Text("原名:${data.originalTitle}",
+                  style: TextStyle(color: Colors.grey))
+            ],
+          ),
+          Card(
+              shape: RoundedRectangleBorder(),
+              elevation: 4,
+              child: Container(
+                padding: EdgeInsets.all(5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("豆瓣评分", style: TextStyle(color: Colors.grey)),
+                    Text("${data.rating.average}",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    StarRating(
+                      starCount: 5,
+                      rating: data.rating.average / 2.0,
+                      color: Colors.amberAccent,
+                    ),
+                    Text(
+                      "${data.ratingsCount} mark",
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
+  }
+}
+
+class _CastSection extends StatelessWidget {
+  final List<Members> data;
+
+  const _CastSection({Key key, this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 270,
+        margin: EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 40),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "演职员",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
+              Container(
+                  height: 240,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return _CastItem(member: data[index]);
+                      },
+                      separatorBuilder: (context, index) =>
+                          Divider(color: Colors.transparent),
+                      itemCount: data.length,
+                      scrollDirection: Axis.horizontal))
+            ]));
+  }
+}
+
+class _CastItem extends StatelessWidget {
+  final Members member;
+
+  const _CastItem({Key key, this.member}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 150 * GOLDEN_RATIO,
+        margin: EdgeInsets.all(15),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            FadeInImage.assetNetwork(
+                height: 150,
+                width: 150 * GOLDEN_RATIO,
+                placeholder: ASSETS_IMAGE_HOLDER,
+                image: member.avatarUrl),
+            Text(member.name),
+            Text(member.type == CastsType.director ? "导演" : "")
+          ],
+        ));
   }
 }
