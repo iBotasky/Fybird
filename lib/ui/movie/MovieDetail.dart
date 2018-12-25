@@ -2,18 +2,21 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
+import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/data/MovieDetailData.dart';
 
 /// AppBarBehavior
-enum AppBarBehavior { normal, pinned, floating, snapping }
+//enum AppBarBehavior { normal, pinned, floating, snapping }
 
 class MovieDetail extends StatefulWidget {
   final String title;
   final String id;
+  final String imageUrl;
 
   static const String routeName = '/movie/movie_detail';
 
-  const MovieDetail({Key key, this.title, this.id}) : super(key: key);
+  const MovieDetail({Key key, this.title, this.id, this.imageUrl})
+      : super(key: key);
 
   @override
   _MovieDetailState createState() => _MovieDetailState();
@@ -22,16 +25,17 @@ class MovieDetail extends StatefulWidget {
 class _MovieDetailState extends State<MovieDetail> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
-  final double _appBarHeight = 256.0;
+  final double _appBarHeight = 350.0;
+  final double _imageHeight = 220.0;
+
+  bool isLoadComplete = false;
+
   Dio _dio;
   MovieDetailData _movieDetailData;
-  AppBarBehavior _appBarBehavior;
 
   @override
   void initState() {
     super.initState();
-    //初始化
-    _appBarBehavior = AppBarBehavior.normal;
 
     _dio = Dio(Options(
         baseUrl: URL_MOVIE_HOST, connectTimeout: 10000, receiveTimeout: 3000));
@@ -42,9 +46,9 @@ class _MovieDetailState extends State<MovieDetail> {
   //数据请求
   Future<void> _getMovieDetail() async {
     Response response = await _dio.get('subject/${widget.id}');
+    _movieDetailData = MovieDetailData.fromJson(response.data);
     setState(() {
-      _movieDetailData = MovieDetailData.fromJson(response.data);
-      print("${_movieDetailData.title + " " + _movieDetailData.rating.stars}");
+      isLoadComplete = true;
     });
   }
 
@@ -56,43 +60,9 @@ class _MovieDetailState extends State<MovieDetail> {
         slivers: <Widget>[
           SliverAppBar(
             expandedHeight: _appBarHeight,
-            pinned: _appBarBehavior == AppBarBehavior.pinned,
-            floating: _appBarBehavior == AppBarBehavior.floating ||
-                _appBarBehavior == AppBarBehavior.snapping,
-            snap: _appBarBehavior == AppBarBehavior.snapping,
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.create),
-                tooltip: 'Edit',
-                onPressed: () {
-                  _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                      content:
-                          Text("Editing isn't supported in this screen.")));
-                },
-              ),
-              PopupMenuButton<AppBarBehavior>(
-                onSelected: (AppBarBehavior value) {
-                  setState(() {
-                    _appBarBehavior = value;
-                  });
-                },
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuItem<AppBarBehavior>>[
-                      const PopupMenuItem<AppBarBehavior>(
-                          value: AppBarBehavior.normal,
-                          child: Text('App bar scrolls away')),
-                      const PopupMenuItem<AppBarBehavior>(
-                          value: AppBarBehavior.pinned,
-                          child: Text('App bar stays put')),
-                      const PopupMenuItem<AppBarBehavior>(
-                          value: AppBarBehavior.floating,
-                          child: Text('App bar floats')),
-                      const PopupMenuItem<AppBarBehavior>(
-                          value: AppBarBehavior.snapping,
-                          child: Text('App bar snaps')),
-                    ],
-              ),
-            ],
+            pinned: false,
+            floating: false,
+            snap: false,
             flexibleSpace: FlexibleSpaceBar(
               title:
                   Text(widget.title == null ? "Title is null" : widget.title),
@@ -103,6 +73,14 @@ class _MovieDetailState extends State<MovieDetail> {
                     'assets/images/bg_detail.jpeg',
                     fit: BoxFit.cover,
                     height: _appBarHeight,
+                  ),
+                  Center(
+                    child: FadeInImage.assetNetwork(
+                      placeholder: ASSETS_IMAGE_HOLDER,
+                      image: widget.imageUrl,
+                      height: _imageHeight,
+                      width: _imageHeight * GOLDEN_RATIO,
+                    ),
                   ),
                   // This gradient ensures that the toolbar icons are distinct
                   // against the background image.
@@ -119,168 +97,32 @@ class _MovieDetailState extends State<MovieDetail> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(<Widget>[
-              AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle.dark,
-                child: _ContactCategory(
-                  icon: Icons.call,
-                  children: <Widget>[
-                    _ContactItem(
-                      icon: Icons.message,
-                      tooltip: 'Send message',
-                      onPressed: () {
-                        _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                            content: Text(
-                                'Pretend that this opened your SMS application.')));
-                      },
-                      lines: const <String>[
-                        '(650) 555-1234',
-                        'Mobile',
-                      ],
-                    ),
-                    _ContactItem(
-                      icon: Icons.message,
-                      tooltip: 'Send message',
-                      onPressed: () {
-                        _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                            content: Text('A messaging app appears.')));
-                      },
-                      lines: const <String>[
-                        '(323) 555-6789',
-                        'Work',
-                      ],
-                    ),
-                    _ContactItem(
-                      icon: Icons.message,
-                      tooltip: 'Send message',
-                      onPressed: () {
-                        _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                            content: Text(
-                                'Imagine if you will, a messaging application.')));
-                      },
-                      lines: const <String>[
-                        '(650) 555-6789',
-                        'Home',
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              _ContactCategory(
-                icon: Icons.contact_mail,
-                children: <Widget>[
-                  _ContactItem(
-                    icon: Icons.email,
-                    tooltip: 'Send personal e-mail',
-                    onPressed: () {
-                      _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text(
-                              'Here, your e-mail application would open.')));
-                    },
-                    lines: const <String>[
-                      'ali_connors@example.com',
-                      'Personal',
-                    ],
-                  ),
-                  _ContactItem(
-                    icon: Icons.email,
-                    tooltip: 'Send work e-mail',
-                    onPressed: () {
-                      _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text(
-                              'Summon your favorite e-mail application here.')));
-                    },
-                    lines: const <String>[
-                      'aliconnors@example.com',
-                      'Work',
-                    ],
-                  ),
-                ],
-              ),
-              _ContactCategory(
-                icon: Icons.location_on,
-                children: <Widget>[
-                  _ContactItem(
-                    icon: Icons.map,
-                    tooltip: 'Open map',
-                    onPressed: () {
-                      _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content:
-                              Text('This would show a map of San Francisco.')));
-                    },
-                    lines: const <String>[
-                      '2000 Main Street',
-                      'San Francisco, CA',
-                      'Home',
-                    ],
-                  ),
-                  _ContactItem(
-                    icon: Icons.map,
-                    tooltip: 'Open map',
-                    onPressed: () {
-                      _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content:
-                              Text('This would show a map of Mountain View.')));
-                    },
-                    lines: const <String>[
-                      '1600 Amphitheater Parkway',
-                      'Mountain View, CA',
-                      'Work',
-                    ],
-                  ),
-                  _ContactItem(
-                    icon: Icons.map,
-                    tooltip: 'Open map',
-                    onPressed: () {
-                      _scaffoldKey.currentState.showSnackBar(const SnackBar(
-                          content: Text(
-                              'This would also show a map, if this was not a demo.')));
-                    },
-                    lines: const <String>[
-                      '126 Severyns Ave',
-                      'Mountain View, CA',
-                      'Jet Travel',
-                    ],
-                  ),
-                ],
-              ),
-              _ContactCategory(
-                icon: Icons.today,
-                children: <Widget>[
-                  _ContactItem(
-                    lines: const <String>[
-                      'Birthday',
-                      'January 9th, 1989',
-                    ],
-                  ),
-                  _ContactItem(
-                    lines: const <String>[
-                      'Wedding anniversary',
-                      'June 21st, 2014',
-                    ],
-                  ),
-                  _ContactItem(
-                    lines: const <String>[
-                      'First day in office',
-                      'January 20th, 2015',
-                    ],
-                  ),
-                  _ContactItem(
-                    lines: const <String>[
-                      'Last day in office',
-                      'August 9th, 2018',
-                    ],
-                  ),
-                ],
-              ),
-            ]),
-          ),
+          isLoadComplete
+              ? _MovieDetailInfo(data: _movieDetailData,)
+              : SliverToBoxAdapter(
+                  //这里暂时没有想法说去让LoadView居中，暂时加个Container实现居中
+                  child: Container(height: 400, child: LoadingView()),
+                )
         ],
       ),
     );
   }
 }
+
+class _MovieDetailInfo extends StatelessWidget {
+  final MovieDetailData data;
+
+  const _MovieDetailInfo({Key key, this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(delegate: SliverChildListDelegate([]));
+  }
+}
+
+
+
+
 
 class _ContactItem extends StatelessWidget {
   _ContactItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})

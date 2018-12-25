@@ -123,13 +123,13 @@ class _OneDetailItemState extends State<OneDetailItem> {
         child: Stack(
       children: <Widget>[
         FadeInImage.assetNetwork(
-            width: double.infinity,
+            width:  MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
             height: 240.0,
             placeholder: ASSETS_IMAGE_HOLDER,
             image: widget.data.imgUrl),
         Container(
-            width: double.infinity,
+            width:  MediaQuery.of(context).size.width,
             height: 240.0,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -144,7 +144,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
               end: Alignment.topCenter,
             ))),
         Container(
-            width: double.infinity,
+            width:  MediaQuery.of(context).size.width,
             height: 240.0,
             child: Container(
                 margin: EdgeInsets.only(

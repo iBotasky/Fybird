@@ -9,16 +9,12 @@ class MovieDetailData {
   String id;
   String mobileUrl;
   String title;
-  Null doCount;
   String shareUrl;
-  Null seasonsCount;
   String scheduleUrl;
-  Null episodesCount;
   List<String> countries;
   List<String> genres;
   int collectCount;
   List<Casts> casts;
-  Null currentSeason;
   String originalTitle;
   String summary;
   String subtype;
