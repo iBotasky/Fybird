@@ -41,9 +41,9 @@ class _DailyDetailState extends State<DailyDetail> {
     Response response = await _dio.get("${widget.id}");
     _dailyData = DailyDetailData.fromJson(response.data);
     String css =
-    '''<link rel="stylesheet" href="${_dailyData.css[0]}" type="text/css">''';
+        '''<link rel="stylesheet" href="${_dailyData.css[0]}" type="text/css">''';
     String html =
-    '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
+        '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
     html.replaceAll('''<div class="img-place-holder">''', "");
     _url = html;
     setState(() {
@@ -62,17 +62,32 @@ class _DailyDetailState extends State<DailyDetail> {
 
     return _isLoadComplete
         ? WebviewScaffold(
-      withJavascript: true,
-      url: Uri.dataFromString(_url, mimeType: 'text/html', encoding: utf8)
-          .toString(),
-      appBar: AppBar(
-        title: Container(
-            child: Text(widget.title,
-                style: TextStyle(fontSize: 15),
-                softWrap: true,
-                overflow: TextOverflow.fade)),
-      ),
-    )
-        : Container(height: 0, width: 0,);
+            withJavascript: true,
+            url: Uri.dataFromString(_url, mimeType: 'text/html', encoding: utf8)
+                .toString(),
+            appBar: AppBar(
+              title: Container(
+                  child: Text(widget.title,
+                      style: TextStyle(fontSize: 15),
+                      softWrap: true,
+                      overflow: TextOverflow.fade)),
+            ),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Container(
+                  child: Text(widget.title,
+                      style: TextStyle(fontSize: 15),
+                      softWrap: true,
+                      overflow: TextOverflow.fade)),
+            ),
+            body: LoadingView(),
+          );
+  }
+
+  @override
+  void dispose() {
+    flutterWebviewPlugin.dispose();
+    super.dispose();
   }
 }
