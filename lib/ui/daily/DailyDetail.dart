@@ -20,7 +20,6 @@ class DailyDetail extends StatefulWidget {
 class _DailyDetailState extends State<DailyDetail> {
   Dio _dio;
   DailyDetailData _dailyData;
-  bool _isLoadComplete = false;
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
   String _url = "";
 
@@ -45,9 +44,13 @@ class _DailyDetailState extends State<DailyDetail> {
     String html =
         '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
     html.replaceAll('''<div class="img-place-holder">''', "");
-    _url = html;
     setState(() {
-      _isLoadComplete = true;
+      _url = html;
+      flutterWebviewPlugin.close();
+      flutterWebviewPlugin.launch(
+          Uri.dataFromString(_url, mimeType: 'text/html', encoding: utf8)
+              .toString(),
+          hidden: true);
     });
   }
 
@@ -58,21 +61,25 @@ class _DailyDetailState extends State<DailyDetail> {
     ///final double _imgHeight = _imgWidth * GOLDEN_RATIO;
     ///
 
-    ///TODO 目前已知问题，1.iOS无法正产展示，Android可以，并且会多出一块白屏 2.数据要一开始就初始化好，url不能通过setState来切换
+    ///TODO 目前已知问题，1.iOS无法正产展示，Android可以，并且会多出一块白屏
 
-    return _isLoadComplete
-        ? WebviewScaffold(
-            withJavascript: true,
-            url: Uri.dataFromString(_url, mimeType: 'text/html', encoding: utf8)
-                .toString(),
-            appBar: AppBar(
-              title: Container(
-                  child: Text(widget.title,
-                      style: TextStyle(fontSize: 15),
-                      softWrap: true,
-                      overflow: TextOverflow.fade)),
-            ),
-          )
-        : Container(height: 0, width: 0,);
+    return WebviewScaffold(
+      withJavascript: true,
+      hidden: true,
+      initialChild: LoadingView(),
+      appBar: AppBar(
+        title: Container(
+            child: Text(widget.title,
+                style: TextStyle(fontSize: 15),
+                softWrap: true,
+                overflow: TextOverflow.fade)),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    flutterWebviewPlugin.dispose();
+    super.dispose();
   }
 }
