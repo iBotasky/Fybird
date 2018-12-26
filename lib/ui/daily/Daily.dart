@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/daily/data/DailyData.dart';
+import 'package:flutter_cybird/uitl/NavigatorUtils.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class DailyPage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _DailyPageState extends State<DailyPage> {
   }
 
   Future<void> _getDailyDatas() async {
-    Response response = await _dio.get(URL_ZHIHU_HOST + '/api/4/news/latest');
+    Response response = await _dio.get(URL_ZHIHU_HOST + 'latest');
     setState(() {
       _loadType = Load.LOAD_COMPLETE;
       _dailyData = DailyData.fromJson(response.data);
@@ -153,7 +154,8 @@ class DailyItem extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap: () => debugPrint("hhh"),
+              onTap: () => NavigatorUtils.toDailyDetail(
+                  context, stories.title, "${stories.id}", stories.images[0]),
             )));
   }
 }

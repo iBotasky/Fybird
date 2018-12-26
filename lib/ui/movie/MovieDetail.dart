@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/data/MovieDetailData.dart';
@@ -28,7 +27,7 @@ class _MovieDetailState extends State<MovieDetail> {
   final double _appBarHeight = 350.0;
   final double _imageHeight = 220.0;
 
-  bool isLoadComplete = false;
+  bool _isLoadComplete = false;
 
   Dio _dio;
   MovieDetailData _movieDetailData;
@@ -48,7 +47,7 @@ class _MovieDetailState extends State<MovieDetail> {
     Response response = await _dio.get('subject/${widget.id}');
     _movieDetailData = MovieDetailData.fromJson(response.data);
     setState(() {
-      isLoadComplete = true;
+      _isLoadComplete = true;
     });
   }
 
@@ -56,38 +55,6 @@ class _MovieDetailState extends State<MovieDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-//      body: ListView(
-//        // This next line does the trick.
-//        scrollDirection: Axis.horizontal,
-//        children: <Widget>[
-//          Container(
-//            width: 160.0,
-//            height: 250.0,
-//            color: Colors.red,
-//          ),
-//          Container(
-//            width: 160.0,
-//            height: 250.0,
-//            color: Colors.blue,
-//          ),
-//          Container(
-//            width: 160.0,
-//            height: 250.0,
-//            color: Colors.green,
-//          ),
-//          Container(
-//            width: 160.0,
-//            height: 250.0,
-//            color: Colors.yellow,
-//          ),
-//          Container(
-//            width: 160.0,
-//            height: 250.0,
-//            color: Colors.orange,
-//          ),
-//        ],
-//      ),
-
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -129,7 +96,7 @@ class _MovieDetailState extends State<MovieDetail> {
               ),
             ),
           ),
-          isLoadComplete
+          _isLoadComplete
               ? _MovieDetailInfo(
                   data: _movieDetailData,
                 )
@@ -254,6 +221,7 @@ class _CastSection extends StatelessWidget {
   final List<Members> data;
 
   const _CastSection({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -286,6 +254,7 @@ class _CastSection extends StatelessWidget {
 
 class _CastItem extends StatelessWidget {
   final Members member;
+
   const _CastItem({Key key, this.member}) : super(key: key);
 
   @override
@@ -294,20 +263,20 @@ class _CastItem extends StatelessWidget {
     final double _itemHeight = 160;
     return Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            FadeInImage.assetNetwork(
-                height: _itemHeight,
-                width: _itemWidth,
-                placeholder: ASSETS_IMAGE_HOLDER,
-                image: member.avatarUrl),
-            Container(
-              width: _itemWidth,
-                child: Text(member.name,
-                    softWrap: false, overflow: TextOverflow.ellipsis)),
-            Text(member.type == CastsType.director ? "导演" : "")
-          ],
-        ));
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        FadeInImage.assetNetwork(
+            height: _itemHeight,
+            width: _itemWidth,
+            placeholder: ASSETS_IMAGE_HOLDER,
+            image: member.avatarUrl),
+        Container(
+            width: _itemWidth,
+            child: Text(member.name,
+                softWrap: false, overflow: TextOverflow.ellipsis)),
+        Text(member.type == CastsType.director ? "导演" : "")
+      ],
+    ));
   }
 }
