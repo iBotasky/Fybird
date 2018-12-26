@@ -182,8 +182,10 @@ class _HeadSection extends StatelessWidget {
                       fontSize: 20)),
               Text(data.year + "/" + data.getGenres(),
                   style: TextStyle(color: Colors.grey)),
-              Text("原名:${data.originalTitle}",
-                  style: TextStyle(color: Colors.grey))
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2 - 15,
+                  child: Text("原名:${data.originalTitle}",
+                      style: TextStyle(color: Colors.grey), softWrap: true))
             ],
           ),
           Card(
