@@ -20,6 +20,7 @@ class DailyDetail extends StatefulWidget {
 class _DailyDetailState extends State<DailyDetail> {
   Dio _dio;
   DailyDetailData _dailyData;
+  bool _isLoadComplete = false;
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
   String _url = "";
 
@@ -40,17 +41,13 @@ class _DailyDetailState extends State<DailyDetail> {
     Response response = await _dio.get("${widget.id}");
     _dailyData = DailyDetailData.fromJson(response.data);
     String css =
-        '''<link rel="stylesheet" href="${_dailyData.css[0]}" type="text/css">''';
+    '''<link rel="stylesheet" href="${_dailyData.css[0]}" type="text/css">''';
     String html =
-        '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
+    '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
     html.replaceAll('''<div class="img-place-holder">''', "");
+    _url = html;
     setState(() {
-      _url = html;
-      flutterWebviewPlugin.close();
-      flutterWebviewPlugin.launch(
-          Uri.dataFromString(_url, mimeType: 'text/html', encoding: utf8)
-              .toString(),
-          hidden: true);
+      _isLoadComplete = true;
     });
   }
 
@@ -61,12 +58,13 @@ class _DailyDetailState extends State<DailyDetail> {
     ///final double _imgHeight = _imgWidth * GOLDEN_RATIO;
     ///
 
-    ///TODO 目前已知问题，1.iOS无法正产展示，Android可以，并且会多出一块白屏
+    ///TODO 目前已知问题，1.iOS无法正产展示，Android可以，并且会多出一块白屏 2.数据要一开始就初始化好，url不能通过setState来切换
 
-    return WebviewScaffold(
+    return _isLoadComplete
+        ? WebviewScaffold(
       withJavascript: true,
-      hidden: true,
-      initialChild: LoadingView(),
+      url: Uri.dataFromString(_url, mimeType: 'text/html', encoding: utf8)
+          .toString(),
       appBar: AppBar(
         title: Container(
             child: Text(widget.title,
@@ -74,12 +72,7 @@ class _DailyDetailState extends State<DailyDetail> {
                 softWrap: true,
                 overflow: TextOverflow.fade)),
       ),
-    );
-  }
-
-  @override
-  void dispose() {
-    flutterWebviewPlugin.dispose();
-    super.dispose();
+    )
+        : Container(height: 0, width: 0,);
   }
 }
