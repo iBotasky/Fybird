@@ -106,6 +106,11 @@ class HeadBanner extends StatelessWidget {
               ),
             ]);
           },
+          onTap: (index) => NavigatorUtils.toDailyDetail(
+              context,
+              topStories[index].title,
+              "${topStories[index].id}",
+              topStories[index].image),
           itemCount: topStories.isEmpty ? 0 : topStories.length,
           pagination: SwiperPagination(
               margin: EdgeInsets.all(5),

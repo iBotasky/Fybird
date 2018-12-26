@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       AppPage(
         icon: Icon(Icons.bookmark),
         title: 'Daily',
-        color: Colors.blueAccent.shade400,
+        color: Colors.blue[800],
         body: DailyPage(),
         vsync: this,
       ),

@@ -41,12 +41,10 @@ class _DailyDetailState extends State<DailyDetail> {
     _dailyData = DailyDetailData.fromJson(response.data);
     String css =
         '''<link rel="stylesheet" href="${_dailyData.css[0]}" type="text/css">''';
+    String s = '''<div class="img-place-holder"></div>''';
     String html =
-        '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
-    //todo 这边replace无效
-    html.replaceAll("img-place-holder", " ");
+        '''<html><head>$css</head><body>${_dailyData.body.replaceAll(s, "")}</body></html>''';
     _url = html;
-    print(_url);
     setState(() {
       _isLoadComplete = true;
     });
