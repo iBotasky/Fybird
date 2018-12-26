@@ -37,15 +37,16 @@ class _DailyDetailState extends State<DailyDetail> {
   }
 
   Future<void> _getDailyDeail() async {
-    String s = ''' hello"''';
     Response response = await _dio.get("${widget.id}");
     _dailyData = DailyDetailData.fromJson(response.data);
     String css =
         '''<link rel="stylesheet" href="${_dailyData.css[0]}" type="text/css">''';
     String html =
         '''<html><head>$css</head><body>${_dailyData.body}</body></html>''';
-    html.replaceAll('''<div class="img-place-holder">''', "");
+    //todo 这边replace无效
+    html.replaceAll("img-place-holder", " ");
     _url = html;
+    print(_url);
     setState(() {
       _isLoadComplete = true;
     });
