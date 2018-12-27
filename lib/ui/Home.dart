@@ -73,10 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Fybird',
-        theme: ThemeData(primaryColor: Colors.blue[800]),
-        home: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             backgroundColor: _bottomBarType == BottomNavigationBarType.shifting
                 ? _items[_currentIndex]._color
@@ -103,7 +100,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   _currentIndex = index;
                 });
               }),
-        ));
+        );
   }
 }
 
