@@ -11,7 +11,7 @@ class DailyPage extends StatefulWidget {
   _DailyPageState createState() => _DailyPageState();
 }
 
-class _DailyPageState extends State<DailyPage> {
+class _DailyPageState extends State<DailyPage> with AutomaticKeepAliveClientMixin{
   Load _loadType = Load.LOADING;
   DailyData _dailyData;
   Dio _dio;
@@ -58,6 +58,9 @@ class _DailyPageState extends State<DailyPage> {
             ))
         : LoadingView();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class HeadBanner extends StatelessWidget {

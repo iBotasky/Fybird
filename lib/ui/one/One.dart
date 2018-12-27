@@ -12,7 +12,7 @@ class OnePage extends StatefulWidget {
   _OnePageState createState() => _OnePageState();
 }
 
-class _OnePageState extends State<OnePage> {
+class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin{
   List<Content> _datas;
   bool _isLoadComplete = false; //用以判断加载状态实现切换界面
   ScrollController _controller = ScrollController();
@@ -102,6 +102,9 @@ class _OnePageState extends State<OnePage> {
           : LoadingView(),
     ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class OneDetailItem extends StatefulWidget {

@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<AppPage> _items;
   int _currentIndex = 0;
   BottomNavigationBarType _bottomBarType = BottomNavigationBarType.shifting;
+  PageController _controller;
 
   @override
   void initState() {
@@ -48,14 +49,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         vsync: this,
       ),
     ];
-
-    for (AppPage view in _items) view.controller.addListener(_rebuild);
-
-    _items[_currentIndex].controller.value = 1.0;
-  }
-
-  void _rebuild() {
-    setState(() {});
+    _controller = PageController(initialPage: 0, keepPage: true);
   }
 
   @override
@@ -66,15 +60,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  Widget _buildPageStack() {
-    final List<Widget> transitions = <Widget>[];
-
-    for (int i = 0; i < _items.length; i++) {
-      transitions.add(IgnorePointer(
-          ignoring: _currentIndex != i,
-          child: _items[i].buildTransition(context)));
-    }
-    return Stack(children: transitions);
+  Widget _buildPages() {
+    return PageView.builder(
+      controller: _controller,
+      itemBuilder: (context, index) {
+        return _items[index].body;
+      },
+      onPageChanged: (index) {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      itemCount: _items.length,
+    );
   }
 
   @override
@@ -92,7 +90,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           body: Center(
-            child: _buildPageStack(),
+            child: _buildPages(),
           ),
           bottomNavigationBar: BottomNavigationBar(
               type: _bottomBarType,
@@ -103,9 +101,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               currentIndex: _currentIndex,
               onTap: (int index) {
                 setState(() {
-                  _items[_currentIndex].controller.reverse();
+                  _controller.animateToPage(index, duration: Duration(microseconds: 100), curve: Curves.linear);
                   _currentIndex = index;
-                  _items[_currentIndex].controller.forward();
                 });
               }),
         ));
@@ -123,22 +120,11 @@ class AppPage {
           icon: icon,
           title: Text(title),
           backgroundColor: color,
-        ) {
-    _animation =
-        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
-  }
+        );
 
   final String _title;
   final Color _color;
   final AnimationController controller;
   final BottomNavigationBarItem item;
   final Widget body;
-  CurvedAnimation _animation;
-
-  FadeTransition buildTransition(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: body,
-    );
-  }
 }

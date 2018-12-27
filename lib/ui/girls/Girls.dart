@@ -9,7 +9,7 @@ class GirlsPage extends StatefulWidget {
   _GirlsPageState createState() => _GirlsPageState();
 }
 
-class _GirlsPageState extends State<GirlsPage> {
+class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixin{
   int _page = 1;
   bool _isLoading = true;
   List<Results> _datas = List();
@@ -67,6 +67,9 @@ class _GirlsPageState extends State<GirlsPage> {
             }),
           );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class PhotoView extends StatefulWidget {
