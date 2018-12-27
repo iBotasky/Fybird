@@ -54,9 +54,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    for (AppPage page in _items) {
-      page.controller.dispose();
-    }
+    _controller.dispose();
     super.dispose();
   }
 
@@ -101,7 +99,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               currentIndex: _currentIndex,
               onTap: (int index) {
                 setState(() {
-                  _controller.animateToPage(index, duration: Duration(microseconds: 100), curve: Curves.linear);
+                  //这边用animate的话会造成底部bottomnavigator一个个点击过去。
+//                  _controller.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                  _controller.jumpToPage(index);
                   _currentIndex = index;
                 });
               }),
@@ -114,8 +114,6 @@ class AppPage {
       {Widget icon, String title, Color color, this.body, TickerProvider vsync})
       : this._title = title,
         this._color = color,
-        this.controller = AnimationController(
-            vsync: vsync, duration: Duration(milliseconds: 200)),
         this.item = BottomNavigationBarItem(
           icon: icon,
           title: Text(title),
@@ -124,7 +122,6 @@ class AppPage {
 
   final String _title;
   final Color _color;
-  final AnimationController controller;
   final BottomNavigationBarItem item;
   final Widget body;
 }
