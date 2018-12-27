@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/daily/Daily.dart';
 import 'package:flutter_cybird/ui/girls/Girls.dart';
 import 'package:flutter_cybird/ui/movie/Movie.dart';
-import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 import 'package:flutter_cybird/ui/one/One.dart';
 
 class HomePage extends StatefulWidget {

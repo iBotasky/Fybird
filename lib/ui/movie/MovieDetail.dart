@@ -183,7 +183,7 @@ class _HeadSection extends StatelessWidget {
               Text(data.year + "/" + data.getGenres(),
                   style: TextStyle(color: Colors.grey)),
               SizedBox(
-                width: MediaQuery.of(context).size.width / 2 - 15,
+                  width: MediaQuery.of(context).size.width / 2 - 15,
                   child: Text("原名:${data.originalTitle}",
                       style: TextStyle(color: Colors.grey), softWrap: true))
             ],
@@ -203,8 +203,9 @@ class _HeadSection extends StatelessWidget {
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     StarRating(
                       starCount: 5,
+                      size: 21,
                       rating: data.rating.average / 2.0,
-                      color: Colors.amberAccent,
+                      color: Colors.amber,
                     ),
                     Text(
                       "${data.ratingsCount} mark",
@@ -268,16 +269,23 @@ class _CastItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        FadeInImage.assetNetwork(
-            height: _itemHeight,
-            width: _itemWidth,
-            placeholder: ASSETS_IMAGE_HOLDER,
-            image: member.avatarUrl),
+        Card(
+          elevation: 3,
+            shape: RoundedRectangleBorder(),
+            child: FadeInImage.assetNetwork(
+                height: _itemHeight,
+                width: _itemWidth,
+                fit: BoxFit.cover,
+                placeholder: ASSETS_IMAGE_HOLDER,
+                image: member.avatarUrl)
+
+        ),
         Container(
             width: _itemWidth,
             child: Text(member.name,
                 softWrap: false, overflow: TextOverflow.ellipsis)),
-        Text(member.type == CastsType.director ? "导演" : "")
+        Text(member.type == CastsType.director ? "导演" : "演员",
+            style: TextStyle(color: Colors.grey, fontSize: 12))
       ],
     ));
   }

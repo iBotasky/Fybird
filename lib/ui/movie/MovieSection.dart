@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/data/MovieData.dart';
-import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 import 'package:flutter_cybird/uitl/NavigatorUtils.dart';
 
 enum Category { IN_THEATERS, COMING_SOON, TOP250 }
@@ -155,32 +154,39 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width / 2.5;
+    final double height = width / GOLDEN_RATIO;
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
+      padding: EdgeInsets.only(left: 15, right: 15, bottom: 0),
       child: Row(
         children: <Widget>[
-          FadeInImage.assetNetwork(
-            placeholder: ASSETS_IMAGE_HOLDER,
-            image: subjects.images.large,
-            width: MediaQuery.of(context).size.width / 2.5,
-            height: 260,
-            fit: BoxFit.cover,
-          ),
+          Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(),
+              child: FadeInImage.assetNetwork(
+                placeholder: ASSETS_IMAGE_HOLDER,
+                image: subjects.images.large,
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+              )),
           Padding(
-            padding: EdgeInsets.only(right: 15),
+            padding: EdgeInsets.only(right: 10),
           ),
           Expanded(
               child: Container(
-                  height: 260,
+                  height: height + 10,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(subjects.title,
                           style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 20)),
+                              fontWeight: FontWeight.w900, fontSize: 15),
+                          softWrap: false,
+                          overflow: TextOverflow.fade),
                       Wrap(
-                        spacing: 4.0,
+                        spacing: 3.0,
                         alignment: WrapAlignment.start,
                         children: getGenersWidgets(),
                       ),
@@ -195,9 +201,10 @@ class MovieItem extends StatelessWidget {
                             Row(children: [
                               StarRating(
                                 starCount: 5,
+                                color: Colors.amber,
                                 rating: subjects.rating.average / 2,
                               ),
-                              Padding(padding: EdgeInsets.only(left: 15)),
+                              Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
                                 "${subjects.rating.average}",
                                 style: TextStyle(fontWeight: FontWeight.bold),
