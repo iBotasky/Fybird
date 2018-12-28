@@ -6,7 +6,7 @@ class MoviePage extends StatefulWidget {
   _MoviePageState createState() => _MoviePageState();
 }
 
-class _MoviePageState extends State<MoviePage> with AutomaticKeepAliveClientMixin{
+class _MoviePageState extends State<MoviePage> with AutomaticKeepAliveClientMixin<MoviePage>{
   List<MovieSection> _sections;
   PageController _controller;
   Category _currentCategory;

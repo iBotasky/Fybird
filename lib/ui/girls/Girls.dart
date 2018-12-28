@@ -9,7 +9,7 @@ class GirlsPage extends StatefulWidget {
   _GirlsPageState createState() => _GirlsPageState();
 }
 
-class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixin{
+class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixin<GirlsPage>{
   int _page = 1;
   bool _isLoading = true;
   List<Results> _datas = List();
