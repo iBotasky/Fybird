@@ -5,6 +5,7 @@ import 'package:flutter_cybird/ui/SplashScreen.dart';
 
 void main() => runApp(MaterialApp(
       title: 'Fybird',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.blue[800]),
       home: SplashScreen(),
       routes: {

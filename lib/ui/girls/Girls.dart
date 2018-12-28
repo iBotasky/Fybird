@@ -114,9 +114,8 @@ class _PhotoViewState extends State<PhotoView> {
                   )))
             ],
           ),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(3.0))),
-          elevation: 2,
+          shape: RoundedRectangleBorder(), //todo 这边嵌套图片后圆角会失效
+          elevation: 3,
         ));
   }
 }
