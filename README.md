@@ -93,7 +93,7 @@ clone到本地后删除`pubspec.lock`，然后重新运行即可
 
 
 ### 微信
-<img src="https://github.com/iBotasky/Fybird/blob/master/images/11.jpe" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/11.jpeg" width="426px"/>
 
 
 
