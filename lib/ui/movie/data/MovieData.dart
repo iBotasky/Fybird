@@ -132,9 +132,9 @@ class Subjects {
   String getFirstThreeCasts() {
     String string = "";
     for (Casts s in casts) {
-      string += "          " + s.name + "\n";
+      string += "        " + s.name + "\n";
     }
-    return string == "" ? "" : string.substring(9, string.length - 1);
+    return string == "" ? "" : string.substring(8, string.length - 1);
   }
 }
 

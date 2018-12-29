@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -157,6 +159,8 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width / 2.5;
     final double height = width / GOLDEN_RATIO;
+    TextStyle textStyle =
+        TextStyle(fontSize: (Platform.isAndroid ? 12 : 14));
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, bottom: 0),
       child: Row(
@@ -176,9 +180,9 @@ class MovieItem extends StatelessWidget {
           ),
           Expanded(
               child: Container(
-                  height: height + 10,
+                  height: height,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(subjects.title,
@@ -191,14 +195,17 @@ class MovieItem extends StatelessWidget {
                         alignment: WrapAlignment.start,
                         children: getGenersWidgets(),
                       ),
-                      Text("导演:${subjects.getDirectors()}"),
-                      Text("演员:${subjects.getFirstThreeCasts()}"),
+                      Text("导演:${subjects.getDirectors()}", style: textStyle),
+                      Text(
+                        "演员:${subjects.getFirstThreeCasts()}",
+                        style: textStyle,
+                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text("评分:"),
+                            Text("评分:",style: textStyle),
                             Row(children: [
                               StarRating(
                                 starCount: 5,
