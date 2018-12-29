@@ -4,25 +4,25 @@
 
 关于Cybird，下载地址：
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/1.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/1.png" width="426px"/>
 
 ## App展示
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/2.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/2.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/3.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/3.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/4.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/4.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/5.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/5.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/6.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/6.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/7.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/7.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/8.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/8.png" width="426px"/>
 
-<img src="https://coding.net/u/Botasky/p/FlutterCybird/git/blob/master/images/9.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/9.png" width="426px"/>
 
 
 ## Flutter版本
