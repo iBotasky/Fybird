@@ -53,6 +53,7 @@ class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return _isLoading
         ? LoadingView()
         : GridView.count(

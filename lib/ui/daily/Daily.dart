@@ -39,6 +39,7 @@ class _DailyPageState extends State<DailyPage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return this._loadType != Load.LOADING
         ? RefreshIndicator(
             onRefresh: _getDailyDatas,

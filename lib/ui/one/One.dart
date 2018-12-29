@@ -81,6 +81,7 @@ class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin<On
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);// See AutomaticKeepAliveClientMixin.
     return Scaffold(
         body: Center(
       child: _isLoadComplete

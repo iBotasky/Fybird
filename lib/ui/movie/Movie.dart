@@ -49,6 +49,7 @@ class _MoviePageState extends State<MoviePage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return Scaffold(
       floatingActionButton: _buildFloatingAction(),
       body: PageView.builder(
