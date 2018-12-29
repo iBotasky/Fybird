@@ -2,7 +2,13 @@
 
 用Flutter编写的Cybird。
 
-关于Cybird，下载地址：
+Fybird下载地址：
+
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/12.png" width="426px"/>
+
+
+
+Kotlin编写的Cybird：
 
 <img src="https://github.com/iBotasky/Fybird/blob/master/images/1.png" width="426px"/>
 
@@ -82,9 +88,12 @@ clone到本地后删除`pubspec.lock`，然后重新运行即可
 ## 给开发者加个鸡腿
 
 ### 支付宝
-<img src="https://github.com/iBotasky/Fybird/blob/master/images/10.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/10.jpeg" width="426px"/>
+
+
+
 ### 微信
-<img src="https://github.com/iBotasky/Fybird/blob/master/images/11.png" width="426px"/>
+<img src="https://github.com/iBotasky/Fybird/blob/master/images/11.jpe" width="426px"/>
 
 
 
