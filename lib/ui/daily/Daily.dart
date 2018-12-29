@@ -11,7 +11,7 @@ class DailyPage extends StatefulWidget {
   _DailyPageState createState() => _DailyPageState();
 }
 
-class _DailyPageState extends State<DailyPage> with AutomaticKeepAliveClientMixin{
+class _DailyPageState extends State<DailyPage> with AutomaticKeepAliveClientMixin<DailyPage>{
   Load _loadType = Load.LOADING;
   DailyData _dailyData;
   Dio _dio;
@@ -39,6 +39,7 @@ class _DailyPageState extends State<DailyPage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return this._loadType != Load.LOADING
         ? RefreshIndicator(
             onRefresh: _getDailyDatas,

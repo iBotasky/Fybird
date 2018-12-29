@@ -9,7 +9,7 @@ class GirlsPage extends StatefulWidget {
   _GirlsPageState createState() => _GirlsPageState();
 }
 
-class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixin{
+class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixin<GirlsPage>{
   int _page = 1;
   bool _isLoading = true;
   List<Results> _datas = List();
@@ -53,6 +53,7 @@ class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return _isLoading
         ? LoadingView()
         : GridView.count(
@@ -114,9 +115,8 @@ class _PhotoViewState extends State<PhotoView> {
                   )))
             ],
           ),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(3.0))),
-          elevation: 2,
+          shape: RoundedRectangleBorder(), //todo 这边嵌套图片后圆角会失效
+          elevation: 3,
         ));
   }
 }

@@ -74,12 +74,16 @@ class _MovieDetailState extends State<MovieDetail> {
                     height: _appBarHeight,
                   ),
                   Center(
-                    child: FadeInImage.assetNetwork(
+                    child: Card(
+                      elevation: 6,
+                        shape: RoundedRectangleBorder(),
+                        child: FadeInImage.assetNetwork(
                       placeholder: ASSETS_IMAGE_HOLDER,
+                      fit: BoxFit.cover,
                       image: widget.imageUrl,
                       height: _imageHeight,
                       width: _imageHeight * GOLDEN_RATIO,
-                    ),
+                    )),
                   ),
                   // This gradient ensures that the toolbar icons are distinct
                   // against the background image.
@@ -270,16 +274,14 @@ class _CastItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Card(
-          elevation: 3,
+            elevation: 3,
             shape: RoundedRectangleBorder(),
             child: FadeInImage.assetNetwork(
                 height: _itemHeight,
                 width: _itemWidth,
                 fit: BoxFit.cover,
                 placeholder: ASSETS_IMAGE_HOLDER,
-                image: member.avatarUrl)
-
-        ),
+                image: member.avatarUrl)),
         Container(
             width: _itemWidth,
             child: Text(member.name,

@@ -12,7 +12,7 @@ class OnePage extends StatefulWidget {
   _OnePageState createState() => _OnePageState();
 }
 
-class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin{
+class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin<OnePage>{
   List<Content> _datas;
   bool _isLoadComplete = false; //用以判断加载状态实现切换界面
   ScrollController _controller = ScrollController();
@@ -81,6 +81,7 @@ class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);// See AutomaticKeepAliveClientMixin.
     return Scaffold(
         body: Center(
       child: _isLoadComplete

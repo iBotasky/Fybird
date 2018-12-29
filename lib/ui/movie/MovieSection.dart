@@ -92,6 +92,7 @@ class _MovieSectionState extends State<MovieSection>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return Scaffold(
         body: Container(
       child: _isLoadComplete

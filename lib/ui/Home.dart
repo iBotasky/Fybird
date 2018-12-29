@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   List<AppPage> _items;
   int _currentIndex = 0;
   BottomNavigationBarType _bottomBarType = BottomNavigationBarType.shifting;
@@ -23,28 +23,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           icon: Icon(Icons.account_circle),
           title: 'One',
           color: Colors.black87,
-          body: OnePage(),
-          vsync: this),
+          body: OnePage()),
       AppPage(
         icon: Icon(Icons.movie_filter),
         title: 'Movie',
         color: Colors.green,
         body: MoviePage(),
-        vsync: this,
       ),
       AppPage(
         icon: Icon(Icons.bookmark),
         title: 'Daily',
         color: Colors.blue[800],
-        body: DailyPage(),
-        vsync: this,
+        body: DailyPage()
       ),
       AppPage(
         icon: Icon(Icons.whatshot),
         title: 'Girls',
         color: Colors.pinkAccent.shade200,
-        body: GirlsPage(),
-        vsync: this,
+        body: GirlsPage()
       ),
     ];
     _controller = PageController(initialPage: 0, keepPage: true);
@@ -102,11 +98,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               }),
         );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class AppPage {
   AppPage(
-      {Widget icon, String title, Color color, this.body, TickerProvider vsync})
+      {Widget icon, String title, Color color, this.body})
       : this._title = title,
         this._color = color,
         this.item = BottomNavigationBarItem(
