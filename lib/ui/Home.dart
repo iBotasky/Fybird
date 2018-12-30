@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
       AppPage(
         icon: Icon(Icons.movie_filter),
         title: 'Movie',
-        color: Colors.green,
+        color: Colors.green[800],
         body: MoviePage(),
       ),
       AppPage(

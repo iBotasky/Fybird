@@ -12,7 +12,6 @@ class _MoviePageState extends State<MoviePage>
   List<MovieSection> _sections;
   PageController _controller;
   Category _currentCategory;
-  int _currentIndex;
   GlobalKey<MovieSectionState> _currentSectionKey;
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
@@ -35,25 +34,16 @@ class _MoviePageState extends State<MoviePage>
       )
     ];
     _currentSectionKey = _sections[0].key;
+    _currentCategory = Category.TOP250;
     _controller = PageController(initialPage: 0, keepPage: true);
   }
 
   FloatingActionButton _buildFloatingAction() {
-    Color _color = Colors.blue[800];
-    if (_currentCategory == Category.TOP250) {
-      _color = Colors.blue[800];
-    } else if (_currentCategory == Category.IN_THEATERS) {
-      _color = Colors.green[800];
-    } else {
-      _color = Colors.red[800];
-    }
-
     return FloatingActionButton(
-      backgroundColor: _color,
+      key:ValueKey(_currentCategory),//这个key用来创建不同的button，有动画
+      backgroundColor: Colors.green[800],
       child: Icon(Icons.arrow_upward),
       onPressed: () {
-//        _scaffoldKey.currentState
-//            .showSnackBar(SnackBar(content: Text("TODO 点击滑到顶部")));
         _currentSectionKey.currentState.toTop();
       },
     );
