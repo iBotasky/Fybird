@@ -85,15 +85,6 @@ Doctor summary (to see all details, run flutter doctor -v):
 clone到本地后删除`pubspec.lock`，然后重新运行即可
 
 
-## 给开发者加个鸡腿
-
-### 支付宝
-<img src="https://github.com/iBotasky/Fybird/blob/master/images/10.jpeg" width="426px"/>
-
-
-
-### 微信
-<img src="https://github.com/iBotasky/Fybird/blob/master/images/11.jpeg" width="426px"/>
 
 
 
