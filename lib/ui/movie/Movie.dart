@@ -16,27 +16,21 @@ class _MoviePageState extends State<MoviePage>
   GlobalKey<MovieSectionState> _currentSectionKey;
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
-  static final GlobalKey<MovieSectionState> _douban250 =
-      GlobalKey<MovieSectionState>();
-  static final GlobalKey<MovieSectionState> _inTheaters =
-      GlobalKey<MovieSectionState>();
-  static final GlobalKey<MovieSectionState> _comingSoon =
-      GlobalKey<MovieSectionState>();
 
   void initState() {
     super.initState();
 
     _sections = [
       MovieSection(
-        key: _douban250,
+        key:  GlobalKey<MovieSectionState>(),
         category: Category.TOP250,
       ),
       MovieSection(
-        key: _inTheaters,
+        key:  GlobalKey<MovieSectionState>(),
         category: Category.IN_THEATERS,
       ),
       MovieSection(
-        key: _comingSoon,
+        key:  GlobalKey<MovieSectionState>(),
         category: Category.COMING_SOON,
       )
     ];
@@ -76,7 +70,6 @@ class _MoviePageState extends State<MoviePage>
         onPageChanged: (index) {
           setState(() {
             _currentCategory = _sections[index].category;
-            _currentIndex = index;
             _currentSectionKey = _sections[index].key;
           });
         },
