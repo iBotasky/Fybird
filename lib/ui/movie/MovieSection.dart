@@ -15,10 +15,10 @@ class MovieSection extends StatefulWidget {
   const MovieSection({Key key, this.category}) : super(key: key);
 
   @override
-  _MovieSectionState createState() => _MovieSectionState();
+  MovieSectionState createState() => MovieSectionState();
 }
 
-class _MovieSectionState extends State<MovieSection>
+class MovieSectionState extends State<MovieSection>
     with AutomaticKeepAliveClientMixin<MovieSection> {
   //使用这个AutomaticKeepAliveClientMixin就不会重新创建一个Widget
 
@@ -31,6 +31,10 @@ class _MovieSectionState extends State<MovieSection>
   List<Subjects> _datas;
   ScrollController _controller;
   Dio _dio;
+
+  toTop(){
+    _controller.animateTo(0, duration: Duration(milliseconds: 300), curve: Curves.linear);
+  }
 
   @override
   void initState() {

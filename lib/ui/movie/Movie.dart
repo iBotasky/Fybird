@@ -13,23 +13,34 @@ class _MoviePageState extends State<MoviePage>
   PageController _controller;
   Category _currentCategory;
   int _currentIndex;
+  GlobalKey<MovieSectionState> _currentSectionKey;
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
+  static final GlobalKey<MovieSectionState> _douban250 =
+      GlobalKey<MovieSectionState>();
+  static final GlobalKey<MovieSectionState> _inTheaters =
+      GlobalKey<MovieSectionState>();
+  static final GlobalKey<MovieSectionState> _comingSoon =
+      GlobalKey<MovieSectionState>();
 
   void initState() {
     super.initState();
 
     _sections = [
       MovieSection(
+        key: _douban250,
         category: Category.TOP250,
       ),
       MovieSection(
+        key: _inTheaters,
         category: Category.IN_THEATERS,
       ),
       MovieSection(
+        key: _comingSoon,
         category: Category.COMING_SOON,
       )
     ];
+    _currentSectionKey = _sections[0].key;
     _controller = PageController(initialPage: 0, keepPage: true);
   }
 
@@ -47,8 +58,9 @@ class _MoviePageState extends State<MoviePage>
       backgroundColor: _color,
       child: Icon(Icons.arrow_upward),
       onPressed: () {
-        _scaffoldKey.currentState
-            .showSnackBar(SnackBar(content: Text("TODO 点击滑到顶部")));
+//        _scaffoldKey.currentState
+//            .showSnackBar(SnackBar(content: Text("TODO 点击滑到顶部")));
+        _currentSectionKey.currentState.toTop();
       },
     );
   }
@@ -65,6 +77,7 @@ class _MoviePageState extends State<MoviePage>
           setState(() {
             _currentCategory = _sections[index].category;
             _currentIndex = index;
+            _currentSectionKey = _sections[index].key;
           });
         },
         itemBuilder: (context, index) {
