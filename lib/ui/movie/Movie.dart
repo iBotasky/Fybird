@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/ui/movie/MovieSection.dart';
 
-///FAB的Action方法该怎么传递？GlobalKey?
 class MoviePage extends StatefulWidget {
   @override
   _MoviePageState createState() => _MoviePageState();
