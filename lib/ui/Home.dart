@@ -68,6 +68,8 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildDrawer() {
+    const _titleTextStyle = TextStyle(
+        color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold);
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the Drawer if there isn't enough vertical
@@ -83,9 +85,10 @@ class _HomePageState extends State<HomePage>
             ),
             margin: EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: _items[_currentIndex]._color,
-              image: DecorationImage(image: AssetImage('assets/images/bg_drawer.jpeg'), fit: BoxFit.cover)
-            ),
+                color: _items[_currentIndex]._color,
+                image: DecorationImage(
+                    image: AssetImage('assets/images/bg_drawer.jpeg'),
+                    fit: BoxFit.cover)),
             onDetailsPressed: () {},
             otherAccountsPictures: <Widget>[],
           ),
@@ -94,25 +97,44 @@ class _HomePageState extends State<HomePage>
             // DrawerHeader consumes top MediaQuery padding.
             removeTop: true,
             child: Expanded(
+                child: Container(
+              color: _items[_currentIndex]._color,
               child: Column(
                 children: <Widget>[
-                  ListTile(title: Text("一个"), onTap: (){_tempSnackbar();}),
-                  ListTile(title: Text("电影"), onTap: (){_tempSnackbar();}),
-                  ListTile(title: Text("日报"), onTap: (){_tempSnackbar();}),
-                  ListTile(title: Text("美女"), onTap: (){_tempSnackbar();}),
+                  ListTile(
+                      title: Text("一个", style: _titleTextStyle),
+                      onTap: () {
+                        _onItemSelect(0);
+                      }),
+                  ListTile(
+                      title: Text("电影", style: _titleTextStyle),
+                      onTap: () {
+                        _onItemSelect(1);
+                      }),
+                  ListTile(
+                      title: Text("日报", style: _titleTextStyle),
+                      onTap: () {
+                        _onItemSelect(2);
+                      }),
+                  ListTile(
+                      title: Text("美女", style: _titleTextStyle),
+                      onTap: () {
+                        _onItemSelect(3);
+                      }),
                 ],
-              )
-            ),
+              ),
+            )),
           ),
         ],
       ),
     );
   }
 
-  _tempSnackbar(){
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("未实现功能")));
+  void _onItemSelect(int index) {
+    Navigator.pop(context); //dismiss drawer
+    _controller.jumpToPage(index);
+    _currentIndex = index;
   }
-
 
   @override
   Widget build(BuildContext context) {
