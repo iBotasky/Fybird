@@ -51,10 +51,10 @@ class MovieDetailData {
   List<Members> getMembers(){
     List<Members> members = List();
     for(Directors director in this.directors){
-      members.add(Members(director.name, director.avatars.large, CastsType.director));
+      members.add(Members(director.name, director.avatars.large, CastsType.director, director.alt));
     }
     for(Casts casts in this.casts){
-      members.add(Members(casts.name, casts.avatars.large, CastsType.actor));
+      members.add(Members(casts.name, casts.avatars.large, CastsType.actor, casts.alt));
     }
     return members;
   }
@@ -148,9 +148,10 @@ enum CastsType{director, actor}
 class Members{
   String name;
   String avatarUrl;
+  String alt;
   CastsType type;
 
-  Members(this.name, this.avatarUrl, this.type);
+  Members(this.name, this.avatarUrl, this.type, this.alt);
 }
 
 

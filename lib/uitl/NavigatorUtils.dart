@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/ui/daily/DailyDetail.dart';
 import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
+import 'package:flutter_cybird/ui/web/WebView.dart';
 
 class NavigatorUtils {
   ///跳转到电影详情页面
@@ -22,7 +23,18 @@ class NavigatorUtils {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                DailyDetail(title: title, id: id)));
+            builder: (context) => DailyDetail(title: title, id: id)));
+  }
+
+  ///跳到有URL的webview
+  static toWebView(BuildContext context, String title, String url, Color barColor) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WebView(
+                  title: title,
+                  url: url,
+                  color: barColor,
+                )));
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_cybird/ui/movie/data/MovieDetailData.dart';
+import 'package:flutter_cybird/uitl/NavigatorUtils.dart';
 
 /// AppBarBehavior
 //enum AppBarBehavior { normal, pinned, floating, snapping }
@@ -75,15 +76,15 @@ class _MovieDetailState extends State<MovieDetail> {
                   ),
                   Center(
                     child: Card(
-                      elevation: 6,
+                        elevation: 6,
                         shape: RoundedRectangleBorder(),
                         child: FadeInImage.assetNetwork(
-                      placeholder: ASSETS_IMAGE_HOLDER,
-                      fit: BoxFit.cover,
-                      image: widget.imageUrl,
-                      height: _imageHeight,
-                      width: _imageHeight * GOLDEN_RATIO,
-                    )),
+                          placeholder: ASSETS_IMAGE_HOLDER,
+                          fit: BoxFit.cover,
+                          image: widget.imageUrl,
+                          height: _imageHeight,
+                          width: _imageHeight * GOLDEN_RATIO,
+                        )),
                   ),
                   // This gradient ensures that the toolbar icons are distinct
                   // against the background image.
@@ -268,27 +269,30 @@ class _CastItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final double _itemWidth = 160 * GOLDEN_RATIO;
     final double _itemHeight = 160;
-    return Container(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Card(
-            elevation: 3,
-            shape: RoundedRectangleBorder(),
-            child: FadeInImage.assetNetwork(
-                height: _itemHeight,
-                width: _itemWidth,
-                fit: BoxFit.cover,
-                placeholder: ASSETS_IMAGE_HOLDER,
-                image: member.avatarUrl)),
-        Container(
-            width: _itemWidth,
-            child: Text(member.name,
-                softWrap: false, overflow: TextOverflow.ellipsis)),
-        Text(member.type == CastsType.director ? "导演" : "演员",
-            style: TextStyle(color: Colors.grey, fontSize: 12))
-      ],
-    ));
+    return GestureDetector(
+      onTap: () => NavigatorUtils.toWebView(context, member.name, member.alt, Colors.green[800]),
+      child: Container(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(),
+              child: FadeInImage.assetNetwork(
+                  height: _itemHeight,
+                  width: _itemWidth,
+                  fit: BoxFit.cover,
+                  placeholder: ASSETS_IMAGE_HOLDER,
+                  image: member.avatarUrl)),
+          Container(
+              width: _itemWidth,
+              child: Text(member.name,
+                  softWrap: false, overflow: TextOverflow.ellipsis)),
+          Text(member.type == CastsType.director ? "导演" : "演员",
+              style: TextStyle(color: Colors.grey, fontSize: 12))
+        ],
+      )),
+    );
   }
 }
