@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<AppPage> _items;
   int _currentIndex = 0;
   BottomNavigationBarType _bottomBarType = BottomNavigationBarType.shifting;
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage>
             ),
             margin: EdgeInsets.zero,
             decoration: BoxDecoration(
+              color: _items[_currentIndex]._color,
               image: DecorationImage(image: AssetImage('assets/images/bg_drawer.jpeg'), fit: BoxFit.cover)
             ),
             onDetailsPressed: () {},
@@ -94,10 +96,10 @@ class _HomePageState extends State<HomePage>
             child: Expanded(
               child: Column(
                 children: <Widget>[
-                  ListTile(title: Text("一个"), onTap: (){}),
-                  ListTile(title: Text("电影"), onTap: (){}),
-                  ListTile(title: Text("日报"), onTap: (){}),
-                  ListTile(title: Text("美女"), onTap: (){}),
+                  ListTile(title: Text("一个"), onTap: (){_tempSnackbar();}),
+                  ListTile(title: Text("电影"), onTap: (){_tempSnackbar();}),
+                  ListTile(title: Text("日报"), onTap: (){_tempSnackbar();}),
+                  ListTile(title: Text("美女"), onTap: (){_tempSnackbar();}),
                 ],
               )
             ),
@@ -107,9 +109,15 @@ class _HomePageState extends State<HomePage>
     );
   }
 
+  _tempSnackbar(){
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("未实现功能")));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: _buildDrawer(),
       appBar: AppBar(
         backgroundColor: _bottomBarType == BottomNavigationBarType.shifting

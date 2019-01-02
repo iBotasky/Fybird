@@ -57,7 +57,7 @@ class _DailyDetailState extends State<DailyDetail> {
     ///final double _imgHeight = _imgWidth * GOLDEN_RATIO;
     ///
 
-    ///TODO 目前已知问题，1.iOS无法正产展示，Android可以，并且会多出一块白屏 2.数据要一开始就初始化好，url不能通过setState来切换
+    ///TODO 目前已知问题，1.iOS无法正产展示，Android可以，并且会多出一块白屏 2.数据要一开始就初始化好，url不能通过setState来切换，导致我目前只能初始化创建一个loading的Scaffold。
 
     return _isLoadComplete
         ? WebviewScaffold(
