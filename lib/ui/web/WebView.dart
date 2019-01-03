@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cybird/ui/base/BaseComponent.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 //class WebView extends StatefulWidget {
@@ -27,6 +28,8 @@ class WebView extends StatelessWidget {
     return WebviewScaffold(
       url: url,
       withJavascript: true,
+      hidden: true,
+      initialChild: LoadingView(),
       appBar: AppBar(
         backgroundColor: color,
         title: Container(

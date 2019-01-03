@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -11,7 +12,8 @@ class DailyPage extends StatefulWidget {
   _DailyPageState createState() => _DailyPageState();
 }
 
-class _DailyPageState extends State<DailyPage> with AutomaticKeepAliveClientMixin<DailyPage>{
+class _DailyPageState extends State<DailyPage>
+    with AutomaticKeepAliveClientMixin<DailyPage> {
   Load _loadType = Load.LOADING;
   DailyData _dailyData;
   Dio _dio;
@@ -76,11 +78,12 @@ class HeadBanner extends StatelessWidget {
         child: Swiper(
           itemBuilder: (context, index) {
             return Stack(children: <Widget>[
-              FadeInImage.assetNetwork(
+              CachedNetworkImage(
                   width: MediaQuery.of(context).size.width,
-                  placeholder: ASSETS_IMAGE_HOLDER,
+                  placeholder: Image.asset(ASSETS_IMAGE_HOLDER,
+                      width: MediaQuery.of(context).size.width),
                   fit: BoxFit.cover,
-                  image: topStories[index].image),
+                  imageUrl: topStories[index].image),
               Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -149,9 +152,13 @@ class DailyItem extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    FadeInImage.assetNetwork(
-                        placeholder: ASSETS_IMAGE_HOLDER,
-                        image: stories.images[0],
+                    CachedNetworkImage(
+                        placeholder: Image.asset(
+                          ASSETS_IMAGE_HOLDER,
+                          width: 70,
+                          height: 70,
+                        ),
+                        imageUrl: stories.images[0],
                         width: 70,
                         height: 70),
                     Padding(padding: EdgeInsets.only(right: 10)),

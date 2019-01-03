@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -32,8 +33,9 @@ class MovieSectionState extends State<MovieSection>
   ScrollController _controller;
   Dio _dio;
 
-  toTop(){
-    _controller.animateTo(0, duration: Duration(milliseconds: 300), curve: Curves.linear);
+  toTop() {
+    _controller.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.linear);
   }
 
   @override
@@ -163,8 +165,7 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width / 2.5;
     final double height = width / GOLDEN_RATIO;
-    TextStyle textStyle =
-        TextStyle(fontSize: (Platform.isAndroid ? 12 : 14));
+    TextStyle textStyle = TextStyle(fontSize: (Platform.isAndroid ? 12 : 14));
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, bottom: 0),
       child: Row(
@@ -172,9 +173,13 @@ class MovieItem extends StatelessWidget {
           Card(
               elevation: 4,
               shape: RoundedRectangleBorder(),
-              child: FadeInImage.assetNetwork(
-                placeholder: ASSETS_IMAGE_HOLDER,
-                image: subjects.images.large,
+              child: CachedNetworkImage(
+                placeholder: Image.asset(
+                  ASSETS_IMAGE_HOLDER,
+                  width: width,
+                  height: height,
+                ),
+                imageUrl: subjects.images.large,
                 width: width,
                 height: height,
                 fit: BoxFit.cover,
@@ -209,7 +214,7 @@ class MovieItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text("评分:",style: textStyle),
+                            Text("评分:", style: textStyle),
                             Row(children: [
                               StarRating(
                                 starCount: 5,

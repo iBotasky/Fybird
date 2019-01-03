@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -9,7 +10,8 @@ class GirlsPage extends StatefulWidget {
   _GirlsPageState createState() => _GirlsPageState();
 }
 
-class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixin<GirlsPage>{
+class _GirlsPageState extends State<GirlsPage>
+    with AutomaticKeepAliveClientMixin<GirlsPage> {
   int _page = 1;
   bool _isLoading = true;
   List<Results> _datas = List();
@@ -33,14 +35,11 @@ class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixi
     ));
 
     _getGirlsData();
-
   }
-
 
   Future<void> _getGirlsData() async {
     List<Results> datas = List();
-    Response response =
-        await _dio.get('/api/data/福利/20/$_page');
+    Response response = await _dio.get('/api/data/福利/20/$_page');
     datas.addAll(GirlsData.fromJson(response.data).results);
     setState(() {
       _datas.addAll(datas);
@@ -48,8 +47,6 @@ class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixi
       _page += 1;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +61,7 @@ class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixi
             // Generate 100 Widgets that display their index in the List
             childAspectRatio: GOLDEN_RATIO,
             children: List.generate(_datas.length, (index) {
-                return PhotoView(girlsData: _datas[index]);
+              return PhotoView(girlsData: _datas[index]);
             }),
           );
   }
@@ -75,7 +72,9 @@ class _GirlsPageState extends State<GirlsPage> with AutomaticKeepAliveClientMixi
 
 class PhotoView extends StatefulWidget {
   final Results girlsData;
+
   const PhotoView({Key key, this.girlsData}) : super(key: key);
+
   @override
   _PhotoViewState createState() => _PhotoViewState(this.girlsData);
 }
@@ -87,17 +86,23 @@ class _PhotoViewState extends State<PhotoView> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return Container(
         margin: EdgeInsets.all(4),
         child: Card(
           child: Stack(
             children: <Widget>[
-              FadeInImage.assetNetwork(
-                  width: double.infinity,
-                  height: double.infinity,
+              CachedNetworkImage(
+                  width: width,
+                  height: height,
                   fit: BoxFit.cover,
-                  placeholder: ASSETS_IMAGE_HOLDER,
-                  image: girlsData.url),
+                  placeholder: Image.asset(
+                    ASSETS_IMAGE_HOLDER,
+                    width: width,
+                    height: height,
+                  ),
+                  imageUrl: girlsData.url),
               Container(
                   width: double.infinity,
                   height: double.infinity,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -12,7 +13,8 @@ class OnePage extends StatefulWidget {
   _OnePageState createState() => _OnePageState();
 }
 
-class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin<OnePage>{
+class _OnePageState extends State<OnePage>
+    with AutomaticKeepAliveClientMixin<OnePage> {
   List<Content> _datas;
   bool _isLoadComplete = false; //用以判断加载状态实现切换界面
   ScrollController _controller = ScrollController();
@@ -81,7 +83,7 @@ class _OnePageState extends State<OnePage> with AutomaticKeepAliveClientMixin<On
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);// See AutomaticKeepAliveClientMixin.
+    super.build(context); // See AutomaticKeepAliveClientMixin.
     return Scaffold(
         body: Center(
       child: _isLoadComplete
@@ -123,18 +125,22 @@ class _OneDetailItemState extends State<OneDetailItem> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = width * GOLDEN_RATIO;
     return Container(
         child: Stack(
       children: <Widget>[
-        FadeInImage.assetNetwork(
-            width:  MediaQuery.of(context).size.width,
+        CachedNetworkImage(
+            width: width,
             fit: BoxFit.cover,
-            height: 240.0,
-            placeholder: ASSETS_IMAGE_HOLDER,
-            image: widget.data.imgUrl),
+            height: height,
+            errorWidget: Icon(Icons.error),
+            placeholder:
+                Image.asset(ASSETS_IMAGE_HOLDER, width: width, height: height),
+            imageUrl: widget.data.imgUrl),
         Container(
-            width:  MediaQuery.of(context).size.width,
-            height: 240.0,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
               colors: [
@@ -148,8 +154,8 @@ class _OneDetailItemState extends State<OneDetailItem> {
               end: Alignment.topCenter,
             ))),
         Container(
-            width:  MediaQuery.of(context).size.width,
-            height: 240.0,
+            width: width,
+            height: height,
             child: Container(
                 margin: EdgeInsets.only(
                     top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),

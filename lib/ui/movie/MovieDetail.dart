@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
@@ -78,10 +79,14 @@ class _MovieDetailState extends State<MovieDetail> {
                     child: Card(
                         elevation: 6,
                         shape: RoundedRectangleBorder(),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: ASSETS_IMAGE_HOLDER,
+                        child: CachedNetworkImage(
+                          placeholder: Image.asset(
+                            ASSETS_IMAGE_HOLDER,
+                            width: _imageHeight * GOLDEN_RATIO,
+                            height: _imageHeight,
+                          ),
                           fit: BoxFit.cover,
-                          image: widget.imageUrl,
+                          imageUrl: widget.imageUrl,
                           height: _imageHeight,
                           width: _imageHeight * GOLDEN_RATIO,
                         )),
@@ -270,7 +275,8 @@ class _CastItem extends StatelessWidget {
     final double _itemWidth = 160 * GOLDEN_RATIO;
     final double _itemHeight = 160;
     return GestureDetector(
-      onTap: () => NavigatorUtils.toWebView(context, member.name, member.alt, Colors.green[800]),
+      onTap: () => NavigatorUtils.toWebView(
+          context, member.name, member.alt, Colors.green[800]),
       child: Container(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -279,12 +285,13 @@ class _CastItem extends StatelessWidget {
           Card(
               elevation: 3,
               shape: RoundedRectangleBorder(),
-              child: FadeInImage.assetNetwork(
+              child: CachedNetworkImage(
                   height: _itemHeight,
                   width: _itemWidth,
                   fit: BoxFit.cover,
-                  placeholder: ASSETS_IMAGE_HOLDER,
-                  image: member.avatarUrl)),
+                  placeholder: Image.asset(ASSETS_IMAGE_HOLDER,
+                      width: _itemWidth, height: _itemHeight),
+                  imageUrl: member.avatarUrl)),
           Container(
               width: _itemWidth,
               child: Text(member.name,
