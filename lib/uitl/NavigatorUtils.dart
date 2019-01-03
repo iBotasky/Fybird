@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_cybird/ui/daily/DailyDetail.dart';
 import 'package:flutter_cybird/ui/girls/GirlsDetail.dart';
 import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
@@ -44,7 +45,7 @@ class NavigatorUtils {
   static toPhotoDetail(BuildContext context, String url){
     Navigator.push(
         context,
-        MaterialPageRoute(
+        CupertinoPageRoute(
             builder: (context) => GirlsDetail(url: url,)));
   }
 }

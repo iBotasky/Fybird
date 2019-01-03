@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+
 class GirlsDetail extends StatelessWidget {
   final String url;
 
@@ -10,9 +9,9 @@ class GirlsDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: Colors.black,
         child: PhotoView(
           imageProvider: NetworkImage(url),
-        )
-    );
+        ));
   }
 }
