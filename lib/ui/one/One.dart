@@ -126,7 +126,7 @@ class _OneDetailItemState extends State<OneDetailItem> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final double height = width * GOLDEN_RATIO;
+    final double height = (width * GOLDEN_RATIO).floor().toDouble();
     return Container(
         child: Stack(
       children: <Widget>[

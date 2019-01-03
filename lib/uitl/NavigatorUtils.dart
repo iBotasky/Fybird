@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/ui/daily/DailyDetail.dart';
+import 'package:flutter_cybird/ui/girls/GirlsDetail.dart';
 import 'package:flutter_cybird/ui/movie/MovieDetail.dart';
 import 'package:flutter_cybird/ui/web/WebView.dart';
 
@@ -36,5 +37,14 @@ class NavigatorUtils {
                   url: url,
                   color: barColor,
                 )));
+  }
+
+
+  ///跳到图片详情页面
+  static toPhotoDetail(BuildContext context, String url){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GirlsDetail(url: url,)));
   }
 }

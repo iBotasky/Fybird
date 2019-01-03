@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cybird/constant/Constant.dart';
 import 'package:flutter_cybird/ui/base/BaseComponent.dart';
+import 'package:flutter_cybird/ui/girls/GirlsDetail.dart';
 import 'package:flutter_cybird/ui/girls/data/GirlsData.dart';
+import 'package:flutter_cybird/uitl/NavigatorUtils.dart';
 
 class GirlsPage extends StatefulWidget {
   @override
@@ -89,39 +91,42 @@ class _PhotoViewState extends State<PhotoView> {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
     return Container(
-        margin: EdgeInsets.all(4),
-        child: Card(
-          child: Stack(
-            children: <Widget>[
-              CachedNetworkImage(
-                  width: width,
-                  height: height,
-                  fit: BoxFit.cover,
-                  placeholder: Image.asset(
-                    ASSETS_IMAGE_HOLDER,
+      margin: EdgeInsets.all(4),
+      child: Card(
+        child: GestureDetector(
+            onTap: () => NavigatorUtils.toPhotoDetail(context, girlsData.url),
+            child: Stack(
+              children: <Widget>[
+                CachedNetworkImage(
                     width: width,
                     height: height,
-                  ),
-                  imageUrl: girlsData.url),
-              Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    colors: [
-                      // Colors are easy thanks to Flutter's
-                      // Colors class.
-                      Color.fromARGB(150, 0, 0, 0),
-                      Color.fromARGB(100, 0, 0, 0),
-                      Color.fromARGB(0, 0, 0, 0),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                  )))
-            ],
-          ),
-          shape: RoundedRectangleBorder(), //todo 这边嵌套图片后圆角会失效
-          elevation: 3,
-        ));
+                    fit: BoxFit.cover,
+                    placeholder: Image.asset(
+                      ASSETS_IMAGE_HOLDER,
+                      width: width,
+                      height: height,
+                    ),
+                    imageUrl: girlsData.url),
+                Container(
+                    width: width,
+                    height: height,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      colors: [
+                        // Colors are easy thanks to Flutter's
+                        // Colors class.
+                        Color.fromARGB(150, 0, 0, 0),
+                        Color.fromARGB(100, 0, 0, 0),
+                        Color.fromARGB(0, 0, 0, 0),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    )))
+              ],
+            )),
+        shape: RoundedRectangleBorder(), //todo 这边嵌套图片后圆角会失效
+        elevation: 3,
+      ),
+    );
   }
 }
