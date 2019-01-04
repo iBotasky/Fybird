@@ -61,7 +61,6 @@ class Content {
   String picInfo;
   String wordsInfo;
   String subtitle;
-  int adId;
   int adType;
   String adPvurl;
   String adLinkurl;
@@ -73,7 +72,7 @@ class Content {
   String contentType;
   String contentBgcolor;
 
-  Content({this.id, this.itemId, this.title, this.forward, this.imgUrl, this.likeCount, this.postDate, this.lastUpdateDate,  this.audioPlatform, this.startVideo, this.volume, this.picInfo, this.wordsInfo, this.subtitle, this.adId, this.adType, this.adPvurl, this.adLinkurl, this.adMakettime, this.adClosetime, this.adShareCnt, this.adPvurlVendor, this.contentId, this.contentType, this.contentBgcolor});
+  Content({this.id, this.itemId, this.title, this.forward, this.imgUrl, this.likeCount, this.postDate, this.lastUpdateDate,  this.audioPlatform, this.startVideo, this.volume, this.picInfo, this.wordsInfo, this.subtitle, this.adType, this.adPvurl, this.adLinkurl, this.adMakettime, this.adClosetime, this.adShareCnt, this.adPvurlVendor, this.contentId, this.contentType, this.contentBgcolor});
 
   Content.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -90,7 +89,6 @@ class Content {
     picInfo = json['pic_info'];
     wordsInfo = json['words_info'];
     subtitle = json['subtitle'];
-    adId = json['ad_id'];
     adType = json['ad_type'];
     adPvurl = json['ad_pvurl'];
     adLinkurl = json['ad_linkurl'];
@@ -119,7 +117,6 @@ class Content {
     data['pic_info'] = this.picInfo;
     data['words_info'] = this.wordsInfo;
     data['subtitle'] = this.subtitle;
-    data['ad_id'] = this.adId;
     data['ad_type'] = this.adType;
     data['ad_pvurl'] = this.adPvurl;
     data['ad_linkurl'] = this.adLinkurl;
