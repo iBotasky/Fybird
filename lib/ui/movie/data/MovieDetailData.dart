@@ -165,7 +165,7 @@ class Rating {
 
   Rating.fromJson(Map<String, dynamic> json) {
     max = json['max'];
-    average = json['average'];
+    average = json['average'] * 1.0;
     stars = json['stars'];
     min = json['min'];
   }
