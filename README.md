@@ -78,6 +78,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 | **flutter_webview_plugin** | **全屏的webview，支持加载本地Html** |
 | **flutter_swiper** | **轮播框架** |
 | **intl** | **日期格式转换** |
+| **photo_view** | **图片查看框架** |
 
 
 
