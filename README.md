@@ -1,5 +1,6 @@
 # Fybird
 
+（因为目前豆瓣API已经关闭开放，所以电影栏数据是出不来的）
 用Flutter编写的Cybird。
 
 Fybird下载地址：
